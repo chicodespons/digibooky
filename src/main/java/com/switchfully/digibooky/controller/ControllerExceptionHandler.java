@@ -1,6 +1,8 @@
 package com.switchfully.digibooky.controller;
 
 
+import com.switchfully.digibooky.exceptions.InssAlreadyExistsException;
+import com.switchfully.digibooky.exceptions.UserAlreadyExistsException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -19,10 +21,16 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         response.sendError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
     }
 
-//    @ExceptionHandler(IllegalArgumentException.class)
-//    protected void UnvalidStudyPointsException(IllegalArgumentException ex, HttpServletResponse response) throws
-//            IOException {
-//        response.sendError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
-//    }
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    protected void UserAlreadyExistsException(UserAlreadyExistsException ex, HttpServletResponse response) throws
+            IOException {
+        response.sendError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+    }
+
+    @ExceptionHandler(InssAlreadyExistsException.class)
+    protected void InssAlreadyExistsException(InssAlreadyExistsException ex, HttpServletResponse response) throws
+            IOException {
+        response.sendError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+    }
 
 }

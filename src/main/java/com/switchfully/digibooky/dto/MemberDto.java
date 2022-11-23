@@ -13,23 +13,33 @@ import lombok.ToString;
 public class MemberDto {
 
     private  String password;
-    private  String userId;
+    private  String inss;
     private  String lastname;
     private  String firstname;
     private  String email;
     private Role role;
     private String streetname;
     private int streetNumber;
-    private String postcode;
+    private int postcode;
     private String city;
 
-    public MemberDto(String password, String userId, String lastname, String firstname, String email, Role role, String streetname, int streetNumber, String postcode, String city) {
+    public MemberDto(String password, String inss, String lastname, String firstname, String email, String streetname, int streetNumber, int postcode, String city) {
         this.password = password;
-        this.userId = userId;
+        this.inss = inss;
         this.lastname = lastname;
         this.firstname = firstname;
         this.email = email;
-        this.role = role;
+        this.streetname = streetname;
+        this.streetNumber = streetNumber;
+        this.postcode = postcode;
+        this.city = city;
+    }
+
+    public MemberDto(String password, String lastname, String firstname, String email, String streetname, int streetNumber, int postcode, String city) {
+        this.password = password;
+        this.lastname = lastname;
+        this.firstname = firstname;
+        this.email = email;
         this.streetname = streetname;
         this.streetNumber = streetNumber;
         this.postcode = postcode;
