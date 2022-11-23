@@ -18,9 +18,6 @@ public class BookDto {
 
         private Author author;
 
-
-        // private final boolean isHidden; indien nodig.
-
         public BookDto(String isbn, String title, Author author) {
             ISBN = isbn;
             this.title = title;

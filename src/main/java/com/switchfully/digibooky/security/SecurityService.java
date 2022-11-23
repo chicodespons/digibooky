@@ -23,12 +23,12 @@ public class SecurityService {
         EmailPassword emailPassword = getEmailPassword(authorization);
         User user = userRepository.getUser(emailPassword.getEmail());
         if (user == null || !doesPasswordMatch(user, emailPassword.getPassword())) {
-            logger.error("Unknown user: " + emailPassword.getEmail());
+            logger.error("Incorrect login try: " + emailPassword.getEmail() + emailPassword.getPassword());
             throw new IllegalArgumentException("Given combination of email and password is not correct");
         }
         if (!canHaveAccessTo(user, feature)){
             logger.error("User: " + emailPassword.getEmail() + " ,does not have access to: " + feature);
-            throw new IllegalCallerException("User does not have access.");
+            throw new IllegalArgumentException("User does not have access.");
         }
     }
 
@@ -46,4 +46,5 @@ public class SecurityService {
         String password = decodedEmailAndPassword.substring(decodedEmailAndPassword.indexOf(":") + 1);
         return new EmailPassword(email, password);
     }
+
 }
