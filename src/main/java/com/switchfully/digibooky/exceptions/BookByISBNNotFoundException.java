@@ -1,4 +1,4 @@
-package com.switchfully.digibooky.controller.exceptions;
+package com.switchfully.digibooky.exceptions;
 
 public class BookByISBNNotFoundException extends IllegalArgumentException{
 
