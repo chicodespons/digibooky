@@ -1,6 +1,7 @@
 package com.switchfully.digibooky.controller;
 
 
+import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
 import com.switchfully.digibooky.exceptions.InssAlreadyExistsException;
 import com.switchfully.digibooky.exceptions.UserAlreadyExistsException;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,6 +1,6 @@
 package com.switchfully.digibooky.service;
 
-import com.switchfully.digibooky.controller.exceptions.BookByISBNNotFoundException;
+import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
 import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.models.Book;
