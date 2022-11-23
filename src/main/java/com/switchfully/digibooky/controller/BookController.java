@@ -1,6 +1,7 @@
 package com.switchfully.digibooky.controller;
 
 import com.switchfully.digibooky.dto.BookDto;
+import com.switchfully.digibooky.dto.BookSummaryDto;
 import com.switchfully.digibooky.models.Feature;
 import com.switchfully.digibooky.security.SecurityService;
 import com.switchfully.digibooky.service.BookService;
@@ -31,7 +32,7 @@ public class BookController {
 
     @GetMapping(path = "/")
     @ResponseStatus(HttpStatus.OK)
-    public BookDto getBookByISBN(@RequestHeader String authorization, @RequestParam(required = false) String search) {
+    public BookSummaryDto getBookByISBN(@RequestHeader String authorization, @RequestParam(required = false) String search) {
         securityService.validateAuthorization(authorization, Feature.GET_BOOK_BY_ISBN);
          return bookService.getBookByISBN(search);
     }
