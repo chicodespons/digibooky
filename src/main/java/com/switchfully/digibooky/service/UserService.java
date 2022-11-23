@@ -1,5 +1,6 @@
 package com.switchfully.digibooky.service;
 
+import com.switchfully.digibooky.dto.CreateMemberDto;
 import com.switchfully.digibooky.dto.MemberDto;
 import com.switchfully.digibooky.exceptions.InssAlreadyExistsException;
 import com.switchfully.digibooky.exceptions.UserAlreadyExistsException;
@@ -20,15 +21,15 @@ public class UserService {
         this.memberMapper = memberMapper;
     }
 
-    public MemberDto createNewMember(MemberDto memberDto) throws UserAlreadyExistsException, InssAlreadyExistsException {
-        if (userRepository.emailAlreadyUsed(memberDto.getEmail())) {
+    public MemberDto createNewMember(CreateMemberDto createMemberDto) throws UserAlreadyExistsException, InssAlreadyExistsException {
+        if (userRepository.emailAlreadyUsed(createMemberDto.getEmail())) {
             throw new UserAlreadyExistsException();
         }
-        if (userRepository.inssAlreadyUsed(memberDto.getInss())) {
+        if (userRepository.inssAlreadyUsed(createMemberDto.getInss())) {
             throw new InssAlreadyExistsException();
         }
-        userRepository.save(memberMapper.toMember(memberDto));
-        return memberMapper.toDto((Member) userRepository.getUser(memberDto.getEmail()));
+        userRepository.save(memberMapper.createToMember(createMemberDto));
+        return memberMapper.toDto((Member) userRepository.getUser(createMemberDto.getEmail()));
     }
 
     public List<MemberDto> getAllMembers() {
