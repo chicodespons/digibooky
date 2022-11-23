@@ -17,7 +17,7 @@ public class MemberDto {
     private  String lastname;
     private  String firstname;
     private  String email;
-    private Role role;
+
     private String streetname;
     private int streetNumber;
     private int postcode;
@@ -33,6 +33,7 @@ public class MemberDto {
         this.streetNumber = streetNumber;
         this.postcode = postcode;
         this.city = city;
+
     }
 
     public MemberDto(String password, String lastname, String firstname, String email, String streetname, int streetNumber, int postcode, String city) {

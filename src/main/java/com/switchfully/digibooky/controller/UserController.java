@@ -41,11 +41,6 @@ public class UserController {
     }
 
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<MemberDto> getAllUsers() {
-        return userService.getAllMembers();
-    }
-
     @PostMapping(path = "new/member", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public MemberDto registerNewMember(MemberDto memberDto) throws InssAlreadyExistsException, UserAlreadyExistsException {
         return userService.createNewMember(memberDto);

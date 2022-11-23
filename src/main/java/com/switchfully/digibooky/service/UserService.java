@@ -32,6 +32,6 @@ public class UserService {
     }
 
     public List<MemberDto> getAllMembers() {
-        return memberMapper.toDto(userRepository.getAllUsers());
+        return memberMapper.toDto(userRepository.getAllMembers());
     }
 }
