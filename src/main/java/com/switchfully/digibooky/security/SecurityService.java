@@ -26,7 +26,7 @@ public class SecurityService {
             logger.error("Incorrect login try: " + emailPassword.getEmail() + emailPassword.getPassword());
             throw new IllegalArgumentException("Given combination of email and password is not correct");
         }
-        if (!canHaveAccessTo(user, feature)){
+        if (!canHaveAccessTo(user, feature)) {
             logger.error("User: " + emailPassword.getEmail() + " ,does not have access to: " + feature);
             throw new IllegalArgumentException("User does not have access.");
         }
@@ -36,15 +36,14 @@ public class SecurityService {
         return user.getPassword().equals(password);
     }
 
-    public boolean canHaveAccessTo(User user, Feature feature){
+    public boolean canHaveAccessTo(User user, Feature feature) {
         return user.getRole().containsFeature(feature);
     }
 
     private EmailPassword getEmailPassword(String authorization) {
         String decodedEmailAndPassword = new String(Base64.getDecoder().decode(authorization.substring("Basic ".length())));
-        String email = decodedEmailAndPassword.substring(0,decodedEmailAndPassword.indexOf(":"));
+        String email = decodedEmailAndPassword.substring(0, decodedEmailAndPassword.indexOf(":"));
         String password = decodedEmailAndPassword.substring(decodedEmailAndPassword.indexOf(":") + 1);
         return new EmailPassword(email, password);
     }
-
 }

@@ -4,7 +4,6 @@ package com.switchfully.digibooky.controller;
 import com.switchfully.digibooky.exceptions.InssAlreadyExistsException;
 import com.switchfully.digibooky.exceptions.UserAlreadyExistsException;
 import jakarta.servlet.http.HttpServletResponse;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,6 +16,12 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     protected void IllegalArgumentException(IllegalArgumentException ex, HttpServletResponse response) throws
+            IOException {
+        response.sendError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+    }
+
+    @ExceptionHandler(BookByISBNNotFoundException.class)
+    protected void BookByISBNNotFoundException(BookByISBNNotFoundException ex, HttpServletResponse response) throws
             IOException {
         response.sendError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
     }
