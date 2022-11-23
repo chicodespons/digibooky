@@ -1,6 +1,5 @@
 package com.switchfully.digibooky.dto;
 
-import com.switchfully.digibooky.models.Role;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +15,6 @@ public class MemberDto {
     private  String lastname;
     private  String firstname;
     private  String email;
-    private Role role;
     private String streetname;
     private int streetNumber;
     private int postcode;

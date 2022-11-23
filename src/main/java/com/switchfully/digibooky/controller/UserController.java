@@ -7,23 +7,30 @@ import com.switchfully.digibooky.exceptions.UserAlreadyExistsException;
 import com.switchfully.digibooky.repository.UserRepository;
 import com.switchfully.digibooky.service.UserService;
 import org.springframework.http.MediaType;
+import com.switchfully.digibooky.models.Feature;
+import com.switchfully.digibooky.security.SecurityService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "users")
+@RequestMapping(path = "/users")
 public class UserController {
     private final UserRepository userRepository;
     private final UserService userService;
+    private final SecurityService securityService;
 
-    public UserController(UserRepository userRepository, UserService userService) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService, SecurityService securityService, UserRepository userRepository) {
         this.userService = userService;
+        this.securityService = securityService;
+        this.userRepository = userRepository;
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<MemberDto> getAllUsers() {
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<MemberDto> getAllMembers(@RequestHeader String authorization) {
+        securityService.validateAuthorization(authorization, Feature.GET_ALL_MEMBERS);
         return userService.getAllMembers();
     }
 

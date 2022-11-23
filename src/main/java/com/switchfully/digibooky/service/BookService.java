@@ -2,6 +2,7 @@ package com.switchfully.digibooky.service;
 
 import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
 import com.switchfully.digibooky.dto.BookDto;
+import com.switchfully.digibooky.dto.BookSummaryDto;
 import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.models.Book;
 import com.switchfully.digibooky.repository.BookRepository;
@@ -24,11 +25,11 @@ public class BookService {
         return bookMapper.toDto(bookRepository.getBookList());
     }
 
-    public BookDto getBookByISBN(String ISBN) {
+    public BookSummaryDto getBookByISBN(String ISBN) {
         List<Book> bookList = bookRepository.getBookList();
        Book book =  bookList.stream().filter(b -> b.getISBN().equals(ISBN)).findFirst().orElseThrow(() -> new BookByISBNNotFoundException("No book found for given ISBN"));
 
 
-        return bookMapper.toDto(book);
+        return bookMapper.toBookSummaryDto(book);
     }
 }

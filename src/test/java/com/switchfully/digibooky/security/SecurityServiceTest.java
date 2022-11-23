@@ -54,7 +54,7 @@ class SecurityServiceTest {
         String wrongPasword = "sven@mail.be:wrongPasword";
         byte[] inputEncoded = Base64.getEncoder().encode(wrongPasword.getBytes());
         String authorizationString = "Basic " + new String(inputEncoded);
-        //
+
         Feature feature = Feature.GET_ALL_BOOKS;
         //when
 

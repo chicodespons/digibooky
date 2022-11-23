@@ -24,7 +24,7 @@ public class UserRepository {
         return userMap.get(email);
     }
 
-    private List<Member> getMembers() {
+    public List<Member> getAllMembers() {
         List<Member> members = new ArrayList<>();
         for (User user : userMap.values()) {
             if (user instanceof Member) {
@@ -35,7 +35,7 @@ public class UserRepository {
     }
 
     public boolean inssAlreadyUsed(String inss) {
-        List<Member> memberList = getMembers();
+        List<Member> memberList = getAllMembers();
         for (Member member : memberList) {
             if (member.getINSS().equals(inss)) {
                 return true;
@@ -63,7 +63,4 @@ public class UserRepository {
         userMap.put(testmember.getEmail(),testmember);
     }
 
-    public List<Member> getAllUsers() {
-        return getMembers();
-    }
 }

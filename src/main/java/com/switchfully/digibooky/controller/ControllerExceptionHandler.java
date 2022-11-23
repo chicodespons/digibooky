@@ -18,7 +18,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     protected void IllegalArgumentException(IllegalArgumentException ex, HttpServletResponse response) throws
             IOException {
-        response.sendError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+        response.sendError(HttpStatus.FORBIDDEN.value(), ex.getMessage());
     }
 
     @ExceptionHandler(BookByISBNNotFoundException.class)

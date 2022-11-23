@@ -1,6 +1,7 @@
 package com.switchfully.digibooky.mapper;
 
 import com.switchfully.digibooky.dto.BookDto;
+import com.switchfully.digibooky.dto.BookSummaryDto;
 import com.switchfully.digibooky.models.Book;
 import org.springframework.stereotype.Component;
 
@@ -21,5 +22,11 @@ public class BookMapper {
 
     public Book toBook(BookDto bookDto) {
         return new Book(bookDto.getISBN(), bookDto.getTitle(), bookDto.getAuthor());
+    }
+
+    public BookSummaryDto toBookSummaryDto(Book book) {
+
+        return new BookSummaryDto(book.getISBN(), book.getTitle(), book.getAuthor(), book.getSummary());
+
     }
 }
