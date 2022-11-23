@@ -1,6 +1,7 @@
 package com.switchfully.digibooky.models;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class User {
 
@@ -11,9 +12,9 @@ public class User {
     private final String email;
     private final Role role;
 
-    public User(String password, String userId, String lastname, String firstname, String email, Role role) {
+    public User(String password, String lastname, String firstname, String email, Role role) {
         this.password = password;
-        this.userId = userId;
+        this.userId = UUID.randomUUID().toString();
         this.lastname = lastname;
         this.firstname = firstname;
         this.email = email;
