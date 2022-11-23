@@ -1,7 +1,9 @@
 package com.switchfully.digibooky.service;
 
+import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
 import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.mapper.BookMapper;
+import com.switchfully.digibooky.models.Book;
 import com.switchfully.digibooky.repository.BookRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +22,13 @@ public class BookService {
 
     public List<BookDto> getAllBooks() {
         return bookMapper.toDto(bookRepository.getBookList());
+    }
+
+    public BookDto getBookByISBN(String ISBN) {
+        List<Book> bookList = bookRepository.getBookList();
+       Book book =  bookList.stream().filter(b -> b.getISBN().equals(ISBN)).findFirst().orElseThrow(() -> new BookByISBNNotFoundException("No book found for given ISBN"));
+
+
+        return bookMapper.toDto(book);
     }
 }
