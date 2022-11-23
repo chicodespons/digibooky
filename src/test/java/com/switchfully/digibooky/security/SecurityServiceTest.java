@@ -75,6 +75,5 @@ class SecurityServiceTest {
         Throwable ex = catchThrowable(()->securityService.validateAuthorization(authorizationString,feature));
         //then
         Assertions.assertEquals("User does not have access.",ex.getMessage() );
-
     }
 }
