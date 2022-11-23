@@ -26,9 +26,7 @@ public class BookMapper {
 
     public BookSummaryDto toBookSummaryDto(Book book) {
 
-        return new BookSummaryDto().setISBN(book.getISBN())
-                .setTitle(book.getTitle())
-                .setAuthor(book.getAuthor())
+        return new BookSummaryDto(book.getISBN(), book.getTitle(), book.getAuthor(), book.getSummary());
 
     }
 }
