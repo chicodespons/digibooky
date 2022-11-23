@@ -41,9 +41,6 @@ public class UserController {
     }
 
 
-
-
-
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<MemberDto> getAllUsers() {
         return userService.getAllMembers();
