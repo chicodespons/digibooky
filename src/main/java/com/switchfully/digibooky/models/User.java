@@ -20,6 +20,8 @@ public class User {
         this.role = role;
     }
 
+
+
     public String getPassword() {
         return password;
     }
@@ -67,4 +69,6 @@ public class User {
                 ", role=" + role +
                 '}';
     }
+
+
 }
