@@ -1,20 +1,17 @@
 package com.switchfully.digibooky.service;
 
-import com.switchfully.digibooky.RegexProvider;
+import com.switchfully.digibooky.providers.RegexProvider;
 import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
 import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.dto.BookSummaryDto;
 import com.switchfully.digibooky.exceptions.*;
 import com.switchfully.digibooky.dto.BookToUpdateToDto;
-import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.exceptions.BookByTitleNotFoundException;
 import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.models.Book;
 import com.switchfully.digibooky.repository.BookRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BookService {
