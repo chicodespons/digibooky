@@ -22,7 +22,6 @@ public class LentBook {
         this.book = book;
         this.lendingID = UUID.randomUUID().toString();
         this.dueDate = setDueDate();
-
     }
 
     private LocalDate setDueDate() {
