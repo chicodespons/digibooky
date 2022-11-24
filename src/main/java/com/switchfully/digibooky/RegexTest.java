@@ -6,6 +6,23 @@ import java.util.regex.Pattern;
 
 public class RegexTest {
     public static void main(String[] args) {
+        v2();
+    }
+
+    private static void v3() {
+        String regex = "^[A-Za-z]\\w{5,29}$";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher("daniel");
+        System.out.println(m.matches());
+    }
+
+    private static void v2() {
+        Pattern pattern = Pattern.compile("(.+)@(.+)\\.(.+)$");
+        Matcher input = pattern.matcher("icf@email.s");
+        System.out.println("Matches: " + input.matches());
+    }
+
+    private static void v1() {
         Scanner sc=new Scanner(System.in);
         while (true) {
             System.out.println("Enter regex pattern:");

@@ -5,5 +5,6 @@ public enum Feature {
     GET_BOOK_BY_ID,
     GET_ALL_MEMBERS,
     GET_BOOK_BY_ISBN,
+    LIBRARIAN_REGISTRATION,
     TEST_FEATURE;
 }

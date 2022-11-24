@@ -1,11 +1,10 @@
 package com.switchfully.digibooky.controller;
 
-import com.switchfully.digibooky.dto.BookDto;
-import com.switchfully.digibooky.dto.BookSummaryDto;
+import com.switchfully.digibooky.models.dto.BookDto;
+import com.switchfully.digibooky.models.dto.BookSummaryDto;
 import com.switchfully.digibooky.models.Feature;
 import com.switchfully.digibooky.security.SecurityService;
 import com.switchfully.digibooky.service.BookService;
-import lombok.val;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
