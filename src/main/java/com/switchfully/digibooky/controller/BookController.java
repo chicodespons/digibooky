@@ -44,9 +44,9 @@ public class BookController {
     }
 
     //Update book     http://localhost:8080/books/updatebook/{isbn}
-    @PutMapping(value = "/updatebook/{isbn}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/updatebook/{isbn}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public BookDto updateProfessor(@RequestBody BookToUpdateToDto book, @PathVariable String isbn, @RequestHeader String authorization){
+    public BookDto updateProfessor(@RequestBody BookToUpdateToDto book, @PathVariable String isbn, @RequestHeader String authorization) {
         securityService.validateAuthorization(authorization, Feature.UPDATE_BOOK);
         return bookService.updateBook(book, isbn);
     }

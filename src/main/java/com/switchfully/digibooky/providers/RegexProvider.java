@@ -1,4 +1,4 @@
-package com.switchfully.digibooky;
+package com.switchfully.digibooky.providers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +18,8 @@ public class RegexProvider {
     }
 
     private static boolean isContain(String source, String subItem) {
-        if(subItem.contains("*")){
-            subItem = subItem.replace("*",".*");
+        if (subItem.contains("*")) {
+            subItem = subItem.replace("*", ".*");
             System.out.println(subItem);
         }
         Pattern p = Pattern.compile(subItem);

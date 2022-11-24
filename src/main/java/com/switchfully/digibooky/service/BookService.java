@@ -1,5 +1,6 @@
 package com.switchfully.digibooky.service;
 
+import com.switchfully.digibooky.dto.BookSummaryDto;
 import com.switchfully.digibooky.exceptions.*;
 import com.switchfully.digibooky.dto.BookToUpdateToDto;
 import com.switchfully.digibooky.dto.BookDto;
@@ -27,13 +28,16 @@ public class BookService {
 
     public BookSummaryDto getBookByISBN(String ISBN) {
         List<Book> bookList = bookRepository.getBookList();
-       Book book =  bookList.stream().filter(b -> b.getISBN().equals(ISBN)).findFirst().orElseThrow(() -> new BookByISBNNotFoundException("No book found for given ISBN"));
+        Book book = bookList.stream()
+                .filter(b -> b.getISBN().equals(ISBN))
+                .findFirst()
+                .orElseThrow(() -> new BookByISBNNotFoundException("No book found for given ISBN"));
         return bookMapper.toBookSummaryDto(book);
     }
 
     public BookDto updateBook(BookToUpdateToDto book, String isbn) {
         Book foundBook = bookRepository.getBookList().stream()
-                .filter(books-> books.getISBN().equalsIgnoreCase(isbn))
+                .filter(books -> books.getISBN().equalsIgnoreCase(isbn))
                 .findFirst()
                 .orElseThrow(() -> new BookByISBNNotFoundException("No book found for given ISBN"));
         foundBook.setTitle(book.getTitle());
@@ -50,7 +54,7 @@ public class BookService {
                 throw new IsbnAlreadyExistsException("Book can't be registered ISBN already exists in database");
             }
         }
-        Book bookToRegister = new Book (book.getISBN(), book.getTitle(), book.getAuthor());
+        Book bookToRegister = new Book(book.getISBN(), book.getTitle(), book.getAuthor());
         bookRepository.addBook(bookToRegister);
         return bookToRegister;
     }

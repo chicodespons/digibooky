@@ -32,9 +32,11 @@ public class Book {
         this.summary = summary;
         this.isHidden = isHidden;
     }
+
     public Book(String isbn, String title, Author author, boolean isHidden) {
         this(isbn, title, author, "No summary avaible", isHidden);
     }
+
     public Book(String isbn, String title, Author author) {
         this(isbn, title, author, "No summary avaible", false);
     }
