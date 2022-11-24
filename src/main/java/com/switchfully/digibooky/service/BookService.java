@@ -4,6 +4,7 @@ import com.switchfully.digibooky.RegexProvider;
 import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
 import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.dto.BookSummaryDto;
+import com.switchfully.digibooky.exceptions.BookByTitleNotFoundException;
 import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.models.Book;
 import com.switchfully.digibooky.repository.BookRepository;
@@ -37,4 +38,12 @@ public class BookService {
 
     }
 
+    public List<BookSummaryDto> getBookByTitle(String title) {
+        List<Book> bookList = bookRepository.getBookList();
+        List<Book> booksFound = bookList.stream().filter(b -> RegexProvider.isContain(b.getTitle().toLowerCase(), title)).toList();
+        if(!booksFound.isEmpty()) {
+            return bookMapper.toBookSummaryDto(booksFound);
+        } else
+            throw new BookByTitleNotFoundException("Book not found for given Title");
+    }
 }
