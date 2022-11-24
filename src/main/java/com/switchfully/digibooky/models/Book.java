@@ -2,23 +2,27 @@ package com.switchfully.digibooky.models;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
+
+
 import java.util.Objects;
 
 @Getter
 @ToString
 @EqualsAndHashCode
+@Setter
 public class Book {
 
-    private final String ISBN;
+    private String ISBN;
 
-    private final String title;
+    private String title;
 
-    private final Author author;
+    private Author author;
 
-    private final String summary;
+    private String summary;
 
-    private final boolean isHidden;
+    private boolean isHidden;
 
 
     public Book(String isbn, String title, Author author, String summary, boolean isHidden) {
@@ -34,4 +38,5 @@ public class Book {
     public Book(String isbn, String title, Author author) {
         this(isbn, title, author, "No summary avaible", false);
     }
+
 }
