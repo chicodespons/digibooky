@@ -33,5 +33,4 @@ public class BookService {
         return bookMapper.toBookSummaryDto(book);
     }
 
-    private
 }

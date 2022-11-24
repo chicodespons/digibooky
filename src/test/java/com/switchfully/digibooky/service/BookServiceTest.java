@@ -4,6 +4,7 @@ import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
 import com.switchfully.digibooky.models.Author;
 import com.switchfully.digibooky.models.Book;
+import com.switchfully.digibooky.repository.AuthorRepository;
 import com.switchfully.digibooky.repository.BookRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
-@SpringBootTest
+
 class BookServiceTest {
 
 
@@ -25,6 +26,9 @@ class BookServiceTest {
     private BookMapper bookMapper;
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private AuthorRepository authorRepository;
 
 
     @Test
@@ -43,9 +47,9 @@ class BookServiceTest {
     void checkingThatGetAllBooks_returnsListOfDtoBooks() {
         //given
         Book bookOne = new Book("198165","Samson & Gert",authorRepository.getAuthorList().get(2),"Weird talking dog and rich owner", false);
-        Book bookTwo = new Book("25000","Samson & Gert",authorRepository.getAuthorList().get(2),"Weird talking dog and rich owner", false));
-        bookRepository.add(bookOne);
-        bookRepository.add(bookTwo);
+        Book bookTwo = new Book("25000","Samson & Gert",authorRepository.getAuthorList().get(2),"Weird talking dog and rich owner", false);
+        bookRepository.addBook(bookOne);
+        bookRepository.addBook(bookTwo);
         //then
         Assertions.assertTrue(bookService.getAllBooks().contains(bookMapper.toDto(bookOne)));
         Assertions.assertTrue(bookService.getAllBooks().contains(bookMapper.toDto(bookTwo)));

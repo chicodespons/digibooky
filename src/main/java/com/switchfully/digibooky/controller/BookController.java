@@ -36,8 +36,8 @@ public class BookController {
         securityService.validateAuthorization(authorization, Feature.GET_BOOK_BY_ISBN);
          return bookService.getBookByISBN(search);
     }
-
-    @GetMapping(path = "/getbookbytitle")
-    @ResponseStatus(HttpStatus.OK)
-    public BookSummaryDto getBookByTitle(@RequestHeader String)
+//
+//    @GetMapping(path = "/getbookbytitle")
+//    @ResponseStatus(HttpStatus.OK)
+//    public BookSummaryDto getBookByTitle(@RequestHeader String)
 }
