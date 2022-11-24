@@ -21,7 +21,6 @@ public class RegexProvider {
     }
 
     public static boolean isContain(String source, String subItem) {
-        subItem = subItem.toLowerCase();
         if(subItem.contains("*")){
             subItem = subItem.replace("*",".*");
             System.out.println(subItem);

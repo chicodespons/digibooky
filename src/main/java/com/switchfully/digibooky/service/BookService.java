@@ -40,7 +40,7 @@ public class BookService {
 
     public List<BookSummaryDto> getBookByTitle(String title) {
         List<Book> bookList = bookRepository.getBookList();
-        List<Book> booksFound = bookList.stream().filter(b -> RegexProvider.isContain(b.getTitle().toLowerCase(), title)).toList();
+        List<Book> booksFound = bookList.stream().filter(b -> RegexProvider.isContain(b.getTitle().toLowerCase(), title.toLowerCase())).toList();
         if(!booksFound.isEmpty()) {
             return bookMapper.toBookSummaryDto(booksFound);
         } else
