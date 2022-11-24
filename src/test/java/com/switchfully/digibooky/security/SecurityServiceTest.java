@@ -1,6 +1,7 @@
 package com.switchfully.digibooky.security;
 
 import com.switchfully.digibooky.models.Feature;
+import com.switchfully.digibooky.models.User;
 import com.switchfully.digibooky.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
