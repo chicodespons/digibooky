@@ -30,10 +30,14 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
-    @GetMapping(path = "/")
+    @GetMapping(path = "/getbookbyisbn")
     @ResponseStatus(HttpStatus.OK)
     public BookSummaryDto getBookByISBN(@RequestHeader String authorization, @RequestParam(required = false) String search) {
         securityService.validateAuthorization(authorization, Feature.GET_BOOK_BY_ISBN);
          return bookService.getBookByISBN(search);
     }
+
+    @GetMapping(path = "/getbookbytitle")
+    @ResponseStatus(HttpStatus.OK)
+    public BookSummaryDto getBookByTitle(@RequestHeader String)
 }
