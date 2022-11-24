@@ -1,7 +1,5 @@
 package com.switchfully.digibooky.repository;
 
-import com.switchfully.digibooky.dto.MemberDto;
-import com.switchfully.digibooky.exceptions.UserAlreadyExistsException;
 import com.switchfully.digibooky.models.Member;
 import com.switchfully.digibooky.models.Role;
 import com.switchfully.digibooky.models.User;
@@ -63,4 +61,9 @@ public class UserRepository {
         userMap.put(testmember.getEmail(), testmember);
     }
 
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        users.addAll(userMap.values());
+        return users;
+    }
 }

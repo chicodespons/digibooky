@@ -1,5 +1,6 @@
 package com.switchfully.digibooky.dto;
 
+import com.switchfully.digibooky.models.Role;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
