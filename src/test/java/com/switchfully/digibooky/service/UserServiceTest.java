@@ -8,6 +8,7 @@ import com.switchfully.digibooky.mapper.UserMapper;
 import com.switchfully.digibooky.dto.CreateMemberDto;
 import com.switchfully.digibooky.repository.UserRepository;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -15,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class UserServiceTest {
+
+
     @Test
     void creatingMemberWithInvalidEmailFormat_ShouldReturn_CustomExceptionWithMessage() {
         UserRepository userRepository = new UserRepository();

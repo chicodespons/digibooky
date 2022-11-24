@@ -1,14 +1,16 @@
 package com.switchfully.digibooky.service;
 
+import com.switchfully.digibooky.providers.RegexProvider;
+import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
+import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.dto.BookSummaryDto;
 import com.switchfully.digibooky.exceptions.*;
 import com.switchfully.digibooky.dto.BookToUpdateToDto;
-import com.switchfully.digibooky.dto.BookDto;
+import com.switchfully.digibooky.exceptions.BookByTitleNotFoundException;
 import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.models.Book;
 import com.switchfully.digibooky.repository.BookRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -26,13 +28,23 @@ public class BookService {
         return bookMapper.toDto(bookRepository.getBookList());
     }
 
-    public BookSummaryDto getBookByISBN(String ISBN) {
+    public List<BookSummaryDto> getBookByISBN(String ISBN) {
         List<Book> bookList = bookRepository.getBookList();
-        Book book = bookList.stream()
-                .filter(b -> b.getISBN().equals(ISBN))
-                .findFirst()
-                .orElseThrow(() -> new BookByISBNNotFoundException("No book found for given ISBN"));
-        return bookMapper.toBookSummaryDto(book);
+        List<Book> booksFound = bookList.stream().filter(b -> RegexProvider.isContain(b.getISBN(), ISBN)).toList();
+        if(!booksFound.isEmpty()) {
+            return bookMapper.toBookSummaryDto(booksFound);
+        } else
+            throw new BookByISBNNotFoundException("Book not found for given ISBN");
+
+    }
+
+    public List<BookSummaryDto> getBookByTitle(String title) {
+        List<Book> bookList = bookRepository.getBookList();
+        List<Book> booksFound = bookList.stream().filter(b -> RegexProvider.isContain(b.getTitle().toLowerCase(), title.toLowerCase())).toList();
+        if(!booksFound.isEmpty()) {
+            return bookMapper.toBookSummaryDto(booksFound);
+        } else
+            throw new BookByTitleNotFoundException("Book not found for given Title");
     }
 
     public BookDto updateBook(BookToUpdateToDto book, String isbn) {

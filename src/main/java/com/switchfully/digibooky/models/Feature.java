@@ -8,5 +8,6 @@ public enum Feature {
     LIBRARIAN_REGISTRATION,
     TEST_FEATURE,
     UPDATE_BOOK,
+    GET_BOOK_BY_TITLE,
     REGISTER_BOOK;
 }

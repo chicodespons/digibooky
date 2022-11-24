@@ -1,5 +1,6 @@
 package com.switchfully.digibooky.controller;
 
+import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.dto.BookSummaryDto;
 import com.switchfully.digibooky.dto.BookToUpdateToDto;
 import com.switchfully.digibooky.dto.BookDto;
@@ -36,9 +37,9 @@ public class BookController {
     //Get book by isbn   http://localhost:8080/books/getbooksbyisbn
     @GetMapping(path = "/getbookbyisbn")
     @ResponseStatus(HttpStatus.OK)
-    public BookSummaryDto getBookByISBN(@RequestHeader String authorization, @RequestParam(required = false) String search) {
+    public List<BookSummaryDto> getBookByISBN(@RequestHeader String authorization, @RequestParam(required = false) String search) {
         securityService.validateAuthorization(authorization, Feature.GET_BOOK_BY_ISBN);
-        return bookService.getBookByISBN(search);
+         return bookService.getBookByISBN(search);
     }
 
     //Update book     http://localhost:8080/books/updatebook/{isbn}
@@ -55,5 +56,12 @@ public class BookController {
     public Book registerNewBook(@RequestHeader String authorization, @RequestBody BookDto book) {
         securityService.validateAuthorization(authorization, Feature.REGISTER_BOOK);
         return bookService.registerNewBook(book);
+    }
+
+    @GetMapping(path = "/getbookbytitle")
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookSummaryDto> getBookByTitle(@RequestHeader String authorization, @RequestParam(required = false) String search) {
+        securityService.validateAuthorization(authorization, Feature.GET_BOOK_BY_TITLE);
+        return bookService.getBookByTitle(search);
     }
 }
