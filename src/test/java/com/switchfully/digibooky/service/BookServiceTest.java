@@ -69,6 +69,21 @@ class BookServiceTest {
         Assertions.assertThrows(BookByISBNNotFoundException.class, () -> bookService.getBookByISBN(ISBN));
     }
 
+    @Test
+    @DisplayName("Testing find book by Title when given good title")
+    void givenTitle_whenGivenGoodTitle_getListOfBooks(){
+
+        List<Book> bookToFindList = new ArrayList<>();
+        bookToFindList.add(new Book("124444444","Ramon",new Author("lola", "lolita"),"Magic and goblet to catch", false));
+        //given
+        bookRepository.addBookList(bookToFindList);
+        String title = "Ramon";
+        //then
+        Assertions.assertEquals(bookMapper.toBookSummaryDto(bookToFindList), bookService.getBookByTitle(title));
+
+
+    }
+
 
 
 
