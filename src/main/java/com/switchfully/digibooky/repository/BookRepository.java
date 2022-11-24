@@ -30,6 +30,11 @@ public class BookRepository {
         return bookList;
     }
 
+    public void addBookList(List<Book> books) {
+
+        bookList.addAll(books);
+    }
+
     public void addBook(Book book){
         bookList.add(book);
     }

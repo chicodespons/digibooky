@@ -1,9 +1,12 @@
 package com.switchfully.digibooky;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 public class RegexProvider {
     public static void main(String[] args) {
@@ -17,7 +20,7 @@ public class RegexProvider {
                 .orElseThrow();
     }
 
-    private static boolean isContain(String source, String subItem) {
+    public static boolean isContain(String source, String subItem) {
         if(subItem.contains("*")){
             subItem = subItem.replace("*",".*");
             System.out.println(subItem);

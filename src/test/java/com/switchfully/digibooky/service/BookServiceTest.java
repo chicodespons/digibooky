@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
@@ -34,12 +37,13 @@ class BookServiceTest {
     @Test
     @DisplayName("Testing find book by ISBN when given good ISBN")
     void givenISBN_whenGivenGoodISBN_getBookByISBN() {
-        Book bookToFind = new Book("124444444","Goblet of Fire",new Author("lola", "lolita"),"Magic and goblet to catch", false);
+        List<Book> bookToFindList = new ArrayList<>();
+        bookToFindList.add(new Book("124444444","Goblet of Fire",new Author("lola", "lolita"),"Magic and goblet to catch", false));
         //given
-        bookRepository.addBook(bookToFind);
+        bookRepository.addBookList(bookToFindList);
         String ISBN = "124444444";
         //then
-        Assertions.assertEquals(bookMapper.toBookSummaryDto(bookToFind), bookService.getBookByISBN(ISBN));
+        Assertions.assertEquals(bookMapper.toBookSummaryDto(bookToFindList), bookService.getBookByISBN(ISBN));
 
     }
     @Test
@@ -60,7 +64,7 @@ class BookServiceTest {
         Book bookToFind = new Book("124444444","Goblet of Fire",new Author("lola", "lolita"),"Magic and goblet to catch", false);
         //given
         bookRepository.addBook(bookToFind);
-        String ISBN = "124444";
+        String ISBN = "aaaa";
         //then
         Assertions.assertThrows(BookByISBNNotFoundException.class, () -> bookService.getBookByISBN(ISBN));
     }

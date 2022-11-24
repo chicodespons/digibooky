@@ -16,7 +16,7 @@ public class BookMapper {
 
     public List<BookDto> toDto(Collection<Book> bookCollection) {
         return bookCollection.stream()
-                .map(book -> toDto(book))
+                .map(this::toDto)
                 .toList();
     }
 
@@ -27,6 +27,11 @@ public class BookMapper {
     public BookSummaryDto toBookSummaryDto(Book book) {
 
         return new BookSummaryDto(book.getISBN(), book.getTitle(), book.getAuthor(), book.getSummary());
+    }
 
+    public List<BookSummaryDto> toBookSummaryDto(Collection<Book> bookCollection) {
+        return bookCollection.stream()
+                .map(this::toBookSummaryDto)
+                .toList();
     }
 }
