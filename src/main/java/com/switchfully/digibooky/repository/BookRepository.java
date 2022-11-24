@@ -2,10 +2,12 @@ package com.switchfully.digibooky.repository;
 
 import com.switchfully.digibooky.models.Author;
 import com.switchfully.digibooky.models.Book;
+import com.switchfully.digibooky.models.Member;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
 
 @Repository
 public class BookRepository {

@@ -22,7 +22,7 @@ public class LentBookRepository {
         mocking();
     }
 
-    public void mocking(){
+    public void mocking() {
         lentBookList.add(new LentBook(bookRepository.getBookList().get(0)));
         lentBookList.add(new LentBook(bookRepository.getBookList().get(1)));
         lentBookList.add(new LentBook(bookRepository.getBookList().get(2)));

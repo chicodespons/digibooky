@@ -12,17 +12,17 @@ import lombok.ToString;
 @ToString
 public class BookDto {
 
-        private String ISBN;
+    private String ISBN;
 
-        private String title;
+    private String title;
 
-        private Author author;
+    private Author author;
 
-        public BookDto(String isbn, String title, Author author) {
-            ISBN = isbn;
-            this.title = title;
-            this.author = author;
+    public BookDto(String isbn, String title, Author author) {
+        ISBN = isbn;
+        this.title = title;
+        this.author = author;
 
-        }
+    }
 
 }

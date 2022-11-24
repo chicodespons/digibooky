@@ -9,16 +9,6 @@ import java.util.regex.Pattern;
 
 
 public class RegexProvider {
-    public static void main(String[] args) {
-
-        List<String> list = new ArrayList<>(List.of("mijn kat is dik", "uw kat is dik", "dze hond is dik", "mijn hond haat katten"));
-
-        String input = "kat";
-        list.stream()
-                .filter(text -> RegexProvider.isContain(text, input))
-                .findFirst()
-                .orElseThrow();
-    }
 
     public static boolean isContain(String source, String subItem) {
         if(subItem.contains("*")){
