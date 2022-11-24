@@ -1,4 +1,4 @@
-package com.switchfully.digibooky;
+package com.switchfully.digibooky.providers;
 
 import org.springframework.stereotype.Component;
 

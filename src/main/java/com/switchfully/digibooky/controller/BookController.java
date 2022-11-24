@@ -39,7 +39,7 @@ public class BookController {
     //Get book by isbn   http://localhost:8080/books/getbooksbyisbn
     @GetMapping(path = "/getbookbyisbn")
     @ResponseStatus(HttpStatus.OK)
-    public BookSummaryDto getBookByISBN(@RequestHeader String authorization, @RequestParam(required = false) String search) {
+    public List<BookSummaryDto> getBookByISBN(@RequestHeader String authorization, @RequestParam(required = false) String search) {
         securityService.validateAuthorization(authorization, Feature.GET_BOOK_BY_ISBN);
          return bookService.getBookByISBN(search);
     }
