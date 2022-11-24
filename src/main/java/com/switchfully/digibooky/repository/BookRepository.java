@@ -2,10 +2,12 @@ package com.switchfully.digibooky.repository;
 
 import com.switchfully.digibooky.models.Author;
 import com.switchfully.digibooky.models.Book;
+import com.switchfully.digibooky.models.Member;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
 
 @Repository
 public class BookRepository {
@@ -29,4 +31,34 @@ public class BookRepository {
     public List<Book> getBookList() {
         return bookList;
     }
+
+    public void addBook(Book bookToRegister) {
+        bookList.add(bookToRegister);
+    }
+
+//    public Book getBook(String isbn) {
+//        return bookMap.get(isbn);
+//    }
+//
+//    private List<Book> getBooks() {
+//        List<Book> books = new ArrayList<>();
+//        for (Book book : bookMap.values()) {
+//            books.add(book);
+//        }
+//        return books;
+//    }
+//
+//    public boolean isbnAlreadyExistsException(String isbn) {
+//        List<Book> bookList = getBooks();
+//        for (Book book : bookList) {
+//            if (book.getISBN().equals(isbn)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    public void save(Book book) {
+//        bookMap.put(book.getISBN());
+//    }
 }

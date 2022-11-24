@@ -8,8 +8,7 @@ public class RegexTest {
     public static void main(String[] args) {
         Scanner sc=new Scanner(System.in);
         while (true) {
-            System.out.println("Enter regex pattern:");
-            Pattern pattern = Pattern.compile("daniel");
+            System.out.println("Enter regex pattern:");Pattern pattern = Pattern.compile("daniel");
 
             System.out.println("Enter text:");
             Matcher matcher = pattern.matcher(sc.nextLine());

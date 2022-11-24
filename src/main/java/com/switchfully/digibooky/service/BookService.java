@@ -1,6 +1,6 @@
 package com.switchfully.digibooky.service;
 
-import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
+import com.switchfully.digibooky.exceptions.*;
 import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.models.Book;
@@ -30,5 +30,18 @@ public class BookService {
 
 
         return bookMapper.toDto(book);
+    }
+
+
+    public Book registerNewBook(BookDto book) {
+        List<Book> bookList = bookRepository.getBookList();
+        for (Book bookInBookList : bookList) {
+            if (bookInBookList.getISBN().equals(book.getISBN())) {
+                throw new IsbnAlreadyExistsException("Book can't be registered ISBN already exists in database");
+            }
+        }
+        Book bookToRegister = new Book (book.getISBN(), book.getTitle(), book.getAuthor());
+        bookRepository.addBook(bookToRegister);
+        return bookToRegister;
     }
 }
