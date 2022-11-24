@@ -1,7 +1,7 @@
 package com.switchfully.digibooky.mapper;
 
-import com.switchfully.digibooky.models.dto.BookDto;
-import com.switchfully.digibooky.models.dto.BookSummaryDto;
+import com.switchfully.digibooky.dto.BookDto;
+import com.switchfully.digibooky.dto.BookSummaryDto;
 import com.switchfully.digibooky.models.Book;
 import org.springframework.stereotype.Component;
 

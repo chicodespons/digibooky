@@ -1,4 +1,4 @@
-package com.switchfully.digibooky.models.dto;
+package com.switchfully.digibooky.dto;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

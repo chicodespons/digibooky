@@ -1,12 +1,12 @@
 package com.switchfully.digibooky.controller;
 
+import com.switchfully.digibooky.dto.MemberDto;
 import com.switchfully.digibooky.exceptions.UserCreationException;
-import com.switchfully.digibooky.models.dto.CreateMemberDto;
-import com.switchfully.digibooky.models.dto.CreateUserDto;
-import com.switchfully.digibooky.models.dto.MemberDto;
+import com.switchfully.digibooky.dto.CreateMemberDto;
+import com.switchfully.digibooky.dto.CreateUserDto;
 import com.switchfully.digibooky.exceptions.InssAlreadyExistsException;
 import com.switchfully.digibooky.exceptions.InvalidEmailAddressException;
-import com.switchfully.digibooky.models.dto.UserDto;
+import com.switchfully.digibooky.dto.UserDto;
 import com.switchfully.digibooky.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;

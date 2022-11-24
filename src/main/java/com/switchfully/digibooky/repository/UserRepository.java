@@ -3,7 +3,6 @@ package com.switchfully.digibooky.repository;
 import com.switchfully.digibooky.models.Member;
 import com.switchfully.digibooky.models.Role;
 import com.switchfully.digibooky.models.User;
-import com.switchfully.digibooky.models.dto.UserDto;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

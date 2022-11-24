@@ -1,11 +1,11 @@
 package com.switchfully.digibooky.service;
 
+import com.switchfully.digibooky.dto.MemberDto;
 import com.switchfully.digibooky.exceptions.InssAlreadyExistsException;
 import com.switchfully.digibooky.exceptions.InvalidEmailAddressException;
 import com.switchfully.digibooky.mapper.MemberMapper;
 import com.switchfully.digibooky.mapper.UserMapper;
-import com.switchfully.digibooky.models.dto.CreateMemberDto;
-import com.switchfully.digibooky.models.dto.MemberDto;
+import com.switchfully.digibooky.dto.CreateMemberDto;
 import com.switchfully.digibooky.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 
