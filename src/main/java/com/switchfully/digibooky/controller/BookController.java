@@ -72,7 +72,22 @@ public class BookController {
         return bookService.getBookByAuthor(search);
     }
 
+    @DeleteMapping(path= "/deletebook/{isbn}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookDto> deleteBookByISBN(@RequestHeader String authorization, @PathVariable String isbn){
+        securityService.validateAuthorization(authorization, Feature.DELETE_BOOK);
+        bookService.deleteBookByIsbn(isbn);
+        return bookService.getAllBooks();
+    }
 
+    //Undelete option, using delete call to make book unhidden
+    @DeleteMapping(path= "/undeletebook/{isbn}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookDto> unDeleteBookByISBN(@RequestHeader String authorization, @PathVariable String isbn){
+        securityService.validateAuthorization(authorization, Feature.DELETE_BOOK);
+        bookService.unDeleteBookByIsbn(isbn);
+        return bookService.getAllBooks();
+    }
 
 
 
