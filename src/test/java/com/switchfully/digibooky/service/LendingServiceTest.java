@@ -1,6 +1,7 @@
 package com.switchfully.digibooky.service;
 
 import com.switchfully.digibooky.dto.CreateMemberDto;
+import com.switchfully.digibooky.exceptions.IncorrectLogInInformationException;
 import com.switchfully.digibooky.exceptions.InvalidEmailAddressException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,13 +44,29 @@ class LendingServiceTest {
     @Autowired
     private LentBookMapper lentBookMapper;
 
+    @Test
+    void LendingBookWithWrongLogin_ShouldReturn_IncorrectLogInInformationException() {
+        String primitiveAuthorization = new String(Base64.getEncoder().encode(("loic@email.com:WRONGPASSWORD").getBytes()));
+        String authorization = "Basic " + primitiveAuthorization;
+        Book book = bookRepository.getBookList().get(0);
+
+        assertThrows(IncorrectLogInInformationException.class, () -> {lendingService.lendBook(authorization, book.getISBN());});
+    }
+
+    @Test
+    void LendingBookWithWrongISB_ShouldReturn_BookByISBNNotFoundException() {
+        String primitiveAuthorization = new String(Base64.getEncoder().encode(("loic@email.com:a").getBytes()));
+        String authorization = "Basic " + primitiveAuthorization;
+
+        assertThrows(IncorrectLogInInformationException.class, () -> {lendingService.lendBook(authorization, "1");});
+    }
+
 //    @Test
-//    void LendingBookWithWrongLogin_ShouldReturn_IncorrectLogInInformationException() {
-//        String authorization = new String(Base64.getEncoder().encode("loic@email.com:a"));
-//        CreateMemberDto member2 = new CreateMemberDto("a", "123aa", "Deketelaere", "Loïc", "@email.com", "Stationstraat",  10, 1000, "Brussel");
+//    void LendingBookWithWrongISB_ShouldReturn_BookByISBNNotFoundException() {
+//        String primitiveAuthorization = new String(Base64.getEncoder().encode(("loic@email.com:a").getBytes()));
+//        String authorization = "Basic " + primitiveAuthorization;
 //
-//        Exception exception = assertThrows(InvalidEmailAddressException.class, () -> {userService.createNewMember(member);});
-//        assertTrue(exception.getMessage().contains("Invalid email format. Email must be of format X@X.X"));
+//        assertThrows(IncorrectLogInInformationException.class, () -> {lendingService.lendBook(authorization, "1");});
 //    }
 
 
