@@ -36,7 +36,7 @@ public class LendingController {
     @ResponseStatus(HttpStatus.OK)
     public BookDto returnBook(@RequestHeader String authorization, @PathVariable String leningId) {
         securityService.validateAuthorization(authorization, Feature.RETURN_BOOK);
-        return lendingService.returnBook(leningId);
+        return lendingService.returnBook(leningId, authorization);
     }
 
     @PostMapping(path = "{bookIsbn}", produces = MediaType.APPLICATION_JSON_VALUE)

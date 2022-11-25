@@ -45,8 +45,12 @@ public class LendingService {
         return lentBookRepository.getAllBooks();
     }
 
-    public BookDto returnBook(String lendingID) {
+    public BookDto returnBook(String lendingID, String authorization) {
+        String userId = securityService.getUserIdByAuthorizationString(authorization);
         LentBook lentBook = lentBookRepository.getLendingBookById(lendingID);
+        if (!lentBook.getUser().getUserId().equals(userId)) {
+            throw new IncorrectLogInInformationException();
+        }
         Book book = lentBook.getBook();
         book.setHidden(false);
         lentBookRepository.removeLending(lendingID);
