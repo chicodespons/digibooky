@@ -8,6 +8,7 @@ import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
 import com.switchfully.digibooky.models.Author;
 import com.switchfully.digibooky.models.Book;
+import com.switchfully.digibooky.models.LentBook;
 import com.switchfully.digibooky.repository.AuthorRepository;
 import com.switchfully.digibooky.repository.BookRepository;
 import org.junit.jupiter.api.Assertions;
@@ -210,4 +211,8 @@ class BookServiceTest {
         //then
         Assertions.assertFalse(bookService.getAllBooks().contains(bookMapper.toDto(bookOne)));
     }
+
+
+
+
 }
