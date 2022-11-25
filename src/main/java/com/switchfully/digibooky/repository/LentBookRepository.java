@@ -47,4 +47,8 @@ public class LentBookRepository {
         lentBookList.put(lentBook.getLendingID(), lentBook);
         return lentBookList.get(lentBook.getLendingID());
     }
+
+    public void addLentBook(LentBook lentBook) {
+        lentBookList.put(lentBook.getLendingID(), lentBook);
+    }
 }

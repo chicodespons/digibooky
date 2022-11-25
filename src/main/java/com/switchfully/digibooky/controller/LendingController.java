@@ -32,14 +32,14 @@ public class LendingController {
     }
 
     //Return a book
-    @PostMapping(path = "/returnbook/{leningId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/returnbook/{leningId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public BookDto returnBook(@RequestHeader String authorization, @PathVariable String leningId) {
         securityService.validateAuthorization(authorization, Feature.RETURN_BOOK);
-        return lendingService.returnBook(leningId);
+        return lendingService.returnBook(leningId, authorization);
     }
 
-    @PostMapping(path = "{bookIsbn}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "{bookIsbn}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public LentBook lendBook(@RequestHeader String authorization, @PathVariable String bookIsbn) throws BookNotAvailableException {
         securityService.validateAuthorization(authorization, Feature.LEND_BOOK);

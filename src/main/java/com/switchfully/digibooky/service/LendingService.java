@@ -1,11 +1,11 @@
 package com.switchfully.digibooky.service;
 
 import com.switchfully.digibooky.dto.BookDto;
+import com.switchfully.digibooky.dto.LentBookDto;
+import com.switchfully.digibooky.dto.LentBookOverdueDto;
 import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
 import com.switchfully.digibooky.exceptions.BookNotAvailableException;
 import com.switchfully.digibooky.exceptions.IncorrectLogInInformationException;
-import com.switchfully.digibooky.dto.LentBookDto;
-import com.switchfully.digibooky.dto.LentBookOverdueDto;
 import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.mapper.LentBookMapper;
 import com.switchfully.digibooky.models.Book;
@@ -40,13 +40,16 @@ public class LendingService {
         this.lentBookMapper = lentBookMapper;
     }
 
-
     public List<LentBook> getAllLentBooks() {
         return lentBookRepository.getAllBooks();
     }
 
-    public BookDto returnBook(String lendingID) {
+    public BookDto returnBook(String lendingID, String authorization) {
+        String userId = securityService.getUserIdByAuthorizationString(authorization);
         LentBook lentBook = lentBookRepository.getLendingBookById(lendingID);
+        if (!lentBook.getUser().getUserId().equals(userId)) {
+            throw new IncorrectLogInInformationException();
+        }
         Book book = lentBook.getBook();
         book.setHidden(false);
         lentBookRepository.removeLending(lendingID);
@@ -55,21 +58,35 @@ public class LendingService {
 
     public LentBook lendBook(String authorization, String bookIsbn) throws BookNotAvailableException {
         String userId = securityService.getUserIdByAuthorizationString(authorization);
+        User user = getUserFromRepository(userId);
+        Book book = getBookFromRepository(bookIsbn);
+        Book lendingBook = updateBookVisibility(book);
+        LentBook bookToLend = new LentBook(lendingBook, user);
+        return lentBookRepository.lendBook(bookToLend);
+    }
+
+    private User getUserFromRepository(String userId) {
         Optional<User> user = userRepository.getUserById(userId);
         if (user.isEmpty()) {
             throw new IncorrectLogInInformationException();
         }
+        return user.get();
+    }
 
+    private Book getBookFromRepository(String bookIsbn) {
         Optional<Book> book = bookRepository.getBookByISBN(bookIsbn);
         if (book.isEmpty()) {
             throw new BookByISBNNotFoundException("The ISNB you provided could not be found.");
         }
-        if (book.get().isHidden()) {
+        return book.get();
+    }
+
+    private Book updateBookVisibility(Book book) throws BookNotAvailableException {
+        if (book.isHidden()) {
             throw new BookNotAvailableException();
         }
-        book.get().setHidden(true);
-        LentBook bookToLend = new LentBook(book.get(), user.get());
-        return lentBookRepository.lendBook(bookToLend);
+        book.setHidden(true);
+        return book;
     }
 
     public List<LentBookDto> getAllLentBooksByMember(String memberEmail) {
