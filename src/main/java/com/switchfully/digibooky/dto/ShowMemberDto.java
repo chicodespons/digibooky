@@ -12,18 +12,17 @@ import lombok.ToString;
 @ToString
 public class ShowMemberDto {
 
-    private  String password;
     private  String lastname;
     private  String firstname;
     private  String email;
     private LentBook lentBook;
 
-    public ShowMemberDto(String password, String lastname, String firstname, String email, LentBook lentBook) {
-        this.password = password;
+    public ShowMemberDto(String lastname, String firstname, String email, LentBook lentBook) {
         this.lastname = lastname;
         this.firstname = firstname;
         this.email = email;
         this.lentBook = lentBook;
+
     }
 
 

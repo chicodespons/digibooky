@@ -1,8 +1,12 @@
 package com.switchfully.digibooky.service;
 
+import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.mapper.BookMapper;
+import com.switchfully.digibooky.models.LentBook;
 import com.switchfully.digibooky.repository.LentBookRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class LendingService {
@@ -16,6 +20,10 @@ public class LendingService {
 
     public List<LentBook> getAllLentBooks() {
         return lentBookRepository.getAllBooks();
+    }
+
+    public BookDto ReturnBook(String lendingID) {
+
     }
 
 //    public LentBook lendBook(String userId, String bookIsbn) {
