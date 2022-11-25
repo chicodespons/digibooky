@@ -1,16 +1,19 @@
 package com.switchfully.digibooky.service;
 
 import com.switchfully.digibooky.dto.BookDto;
-import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
+import com.switchfully.digibooky.dto.LentBookDto;
+import com.switchfully.digibooky.dto.LentBookOverdueDto;
 import com.switchfully.digibooky.mapper.BookMapper;
+import com.switchfully.digibooky.mapper.LentBookMapper;
 import com.switchfully.digibooky.models.Book;
 import com.switchfully.digibooky.models.LentBook;
-import com.switchfully.digibooky.models.User;
 import com.switchfully.digibooky.repository.LentBookRepository;
 import com.switchfully.digibooky.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LendingService {
@@ -18,10 +21,14 @@ public class LendingService {
     private final UserRepository userRepository;
     private final BookMapper bookMapper;
 
-    public LendingService(LentBookRepository lentBookRepository, UserRepository userRepository, BookMapper bookMapper) {
+    private final LentBookMapper lentBookMapper;
+
+
+    public LendingService(LentBookRepository lentBookRepository, UserRepository userRepository, BookMapper bookMapper, LentBookMapper lentBookMapper) {
         this.lentBookRepository = lentBookRepository;
         this.userRepository = userRepository;
         this.bookMapper = bookMapper;
+        this.lentBookMapper = lentBookMapper;
     }
 
     public List<LentBook> getAllLentBooks() {
@@ -36,6 +43,21 @@ public class LendingService {
         return bookMapper.toDto(book);
     }
 
+    public List<LentBookDto> getAllLentBooksByMember(String memberEmail) {
+        Map<String, LentBook> allLentBooksInMap = lentBookRepository.getLentBookList();
+        List<LentBook> lentBooks = allLentBooksInMap.values().stream()
+                .filter(book -> book.getUser().getEmail().equals(memberEmail))
+                .toList();
+        return lentBookMapper.lentBookListToDTO(lentBooks);
+    }
+
+    public List<LentBookOverdueDto> getAllOverDueBooks() {
+        Map<String, LentBook> allLentBooksInMap = lentBookRepository.getLentBookList();
+        List<LentBook> lentOverDueBooks = allLentBooksInMap.values().stream()
+                .filter(books -> books.getDueDate().isBefore(LocalDate.now()))
+                .toList();
+        return lentBookMapper.lentBookOverdueDtoList(lentOverDueBooks);
+    }
 
 
 //    public LentBook lendBook(String userId, String bookIsbn) {
