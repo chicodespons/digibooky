@@ -3,12 +3,14 @@ package com.switchfully.digibooky.repository;
 import com.switchfully.digibooky.models.Book;
 import com.switchfully.digibooky.models.LentBook;
 import com.switchfully.digibooky.models.User;
+import lombok.Getter;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Getter
 @Repository
 public class LentBookRepository {
     private final BookRepository bookRepository;

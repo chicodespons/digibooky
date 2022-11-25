@@ -13,6 +13,8 @@ public enum Feature {
     GET_BOOK_BY_AUTHOR,
     LEND_BOOK,
     RETURN_BOOK,
-    DELETE_BOOK;
+    DELETE_BOOK,
+    GET_ALL_LENT_BOOK_BY_MEMBER,
+    GET_ALL_OVERDUE_BOOKS;
 
 }
