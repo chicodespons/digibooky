@@ -15,9 +15,6 @@ import lombok.ToString;
 public class UserDto {
     @NotNull
     @NotEmpty
-    private final String password;
-    @NotNull
-    @NotEmpty
     private final String lastname;
     @NotNull
     @NotEmpty
@@ -29,8 +26,8 @@ public class UserDto {
     @NotEmpty
     private final Role role;
 
-    public UserDto(String password, String lastname, String firstname, String email, Role role) {
-        this.password = password;
+    public UserDto(String lastname, String firstname, String email, Role role) {
+
         this.lastname = lastname;
         this.firstname = firstname;
         this.email = email;

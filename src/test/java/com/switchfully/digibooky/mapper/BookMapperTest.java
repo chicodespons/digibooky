@@ -1,8 +1,8 @@
 package com.switchfully.digibooky.mapper;
 
+import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.dto.BookSummaryDto;
-import com.switchfully.digibooky.models.Author;
-import com.switchfully.digibooky.models.Book;
+import com.switchfully.digibooky.models.*;
 import com.switchfully.digibooky.repository.BookRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -18,11 +18,26 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class BookMapperTest {
 
-    @Autowired
-    private BookRepository bookRepository;
 
     @Autowired
     private BookMapper bookMapper;
+
+    @Test
+    @DisplayName("Test from book to BookDto")
+    void toDto_whenGivenBook_returnABookDto(){
+        //given
+        BookDto bookDto = new BookDto("1111", "test", new Author("Jane", "Janeson"));
+        Book book = new Book("1111", "test", new Author("Jane", "Janeson"),"this is a testbook", false);
+        Assertions.assertEquals(bookDto, bookMapper.toDto(book));
+    }
+
+    @Test
+    @DisplayName("Test from bookDto to Book")
+    void toBook_whenGivenBookDto_returnABook(){
+        BookDto bookDto = new BookDto("1111", "test", new Author("Jane", "Janeson"));
+        Book book = new Book("1111", "test", new Author("Jane", "Janeson"),"No summary available", false);
+        Assertions.assertEquals(book, bookMapper.toBook(bookDto));
+    }
 
     @Test
     @DisplayName("Testing from book to BookSummaryDto")
@@ -51,4 +66,7 @@ class BookMapperTest {
         Assertions.assertEquals(bookSummaryDtoList, bookMapper.toBookSummaryDto(bookList));
 
     }
+
+
+
 }
