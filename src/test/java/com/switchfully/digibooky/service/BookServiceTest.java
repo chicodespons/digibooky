@@ -1,6 +1,7 @@
 package com.switchfully.digibooky.service;
 
 import com.switchfully.digibooky.dto.BookToUpdateToDto;
+import com.switchfully.digibooky.exceptions.BookByTitleNotFoundException;
 import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
 import com.switchfully.digibooky.models.Author;
@@ -73,15 +74,27 @@ class BookServiceTest {
     @Test
     @DisplayName("Testing find book by Title when given good title")
     void givenTitle_whenGivenGoodTitle_getListOfBooks(){
-
-        List<Book> bookToFindList = new ArrayList<>();
-        bookToFindList.add(new Book("124444444","Ramon",new Author("lola", "lolita"),"Magic and goblet to catch", false));
         //given
+        List<Book> bookToFindList = new ArrayList<>();
+        bookToFindList.add(new Book("12","Jose",new Author("lola", "lolita"),"Magic and goblet to catch", false));
         bookRepository.addBookList(bookToFindList);
-        String title = "Ramon";
+        String title = "Jose";
         //then
         Assertions.assertEquals(bookMapper.toBookSummaryDto(bookToFindList), bookService.getBookByTitle(title));
 
+
+    }
+
+    @Test
+    @DisplayName("Test find book by Title when given bad title")
+    void givenTitle_whenGivenBadTitle_throwException(){
+        //given
+        List<Book> bookToFindList = new ArrayList<>();
+        bookToFindList.add(new Book("15","Ramon",new Author("lola", "lolita"),"Magic and goblet to catch", false));
+        bookRepository.addBookList(bookToFindList);
+        String title = "7457";
+        //then
+        Assertions.assertThrows(BookByTitleNotFoundException.class, () -> bookService.getBookByTitle(title));
 
     }
 

@@ -64,4 +64,11 @@ public class BookController {
         securityService.validateAuthorization(authorization, Feature.GET_BOOK_BY_TITLE);
         return bookService.getBookByTitle(search);
     }
+
+    @GetMapping(path = "/getbookbyauthor")
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookSummaryDto> getBookByAuthor(@RequestHeader String authorization, @RequestParam(required = false) String search) {
+        securityService.validateAuthorization(authorization, Feature.GET_BOOK_BY_AUTHOR);
+        return bookService.getBookByAuthor(search);
+    }
 }
