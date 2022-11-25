@@ -114,4 +114,6 @@ class UserServiceTest {
 
         assertTrue(exception.getMessage().contains("The email address you provided is already in use."));
     }
+
+
 }
