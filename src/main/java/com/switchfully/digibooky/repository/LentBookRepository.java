@@ -2,7 +2,6 @@ package com.switchfully.digibooky.repository;
 
 import com.switchfully.digibooky.models.Book;
 import com.switchfully.digibooky.models.LentBook;
-import com.switchfully.digibooky.models.User;
 import lombok.Getter;
 import org.springframework.stereotype.Repository;
 
