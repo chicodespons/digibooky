@@ -40,6 +40,8 @@ class LendingServiceTest {
     private LentBookRepository lentBookRepository;
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private LentBookMapper lentBookMapper;
 
 //    @Test
 //    void LendingBookWithWrongLogin_ShouldReturn_IncorrectLogInInformationException() {
@@ -72,13 +74,10 @@ class LendingServiceTest {
 //@Test:
 //@DisplayName()
 
-    @Autowired
-    private LendingService lendingService;
-    @Autowired
-    private LentBookMapper lentBookMapper;
 
-    @Autowired
-    private LentBookRepository lentBookRepository;
+
+
+
 
 //    private Map<String, LentBook> lentBookList;
 //    private LentBook lentbook1;
