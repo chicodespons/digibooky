@@ -121,7 +121,7 @@ class BookServiceTest {
     @DisplayName("When adding a book with not unique ISBN, should throw exception")
     void when_addingABookWithNoUniqueISBN_shouldThrowException() {
         //given
-        BookDto bookToRegister = new BookDto("999", "The Hobbit", new Author("Piet", "Hein"));
+        BookDto bookToRegister = new BookDto("956161891651", "The Hobbit", new Author("Piet", "Hein"));
         //when
         bookService.registerNewBook(bookToRegister);
         //then
@@ -132,7 +132,7 @@ class BookServiceTest {
     @DisplayName("When adding a book with not unique ISBN, should be correct")
     void when_addingABookWithNoUniqueISBN_shouldBeCorrect() {
         //given
-        BookDto bookToRegister = new BookDto("999", "The Hobbit", new Author("Piet", "Hein"));
+        BookDto bookToRegister = new BookDto("78945615191", "The Hobbit", new Author("Piet", "Hein"));
         //when
         bookService.registerNewBook(bookToRegister);
         Throwable throwAnException = catchThrowable(()-> bookService.registerNewBook(bookToRegister));
@@ -146,7 +146,7 @@ class BookServiceTest {
     @DisplayName("When soft deleting a book, book should be hidden and still in book repository")
     void whenSoftDeletingABook_bookShouldBeHidden_butStillInRepository(){
         //given
-        Book bookInRepository = new Book("124444444","Ramon",new Author("lola", "lolita"),"Magic and goblet to catch", false);
+        Book bookInRepository = new Book("124444451915951951944","Ramon",new Author("lola", "lolita"),"Magic and goblet to catch", false);
         bookRepository.addBook(bookInRepository);
         //when
         bookService.deleteBookByIsbn(bookInRepository.getISBN());

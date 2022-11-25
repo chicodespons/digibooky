@@ -13,6 +13,7 @@ import com.switchfully.digibooky.models.Member;
 import com.switchfully.digibooky.models.Role;
 import com.switchfully.digibooky.repository.UserRepository;
 import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
@@ -88,7 +89,7 @@ class UserServiceTest {
     @Test
     void creatingMemberWithValidData_ShouldReturn_NewlyCreatedMember() throws InssAlreadyExistsException, InvalidEmailAddressException {
 
-        CreateMemberDto member = new CreateMemberDto("a", "123aa", "Deketelaere", "Loïc", "loic@thisEmailShouldOnlyBeUsedForTests.com", "Stationstraat", 10, 1000, "Brussel");
+        CreateMemberDto member = new CreateMemberDto("a", "123a45949459a", "Deketelaere", "Loïc", "loic@thisEmailShoujk;l;ldOnlyBeUsedForTests.com", "Stationstraat", 10, 1000, "Brussel");
 
         MemberDto createdMember = userService.createNewMember(member);
 
