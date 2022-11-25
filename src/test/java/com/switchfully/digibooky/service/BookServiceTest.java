@@ -1,7 +1,8 @@
 package com.switchfully.digibooky.service;
 
+import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.dto.BookToUpdateToDto;
-import com.switchfully.digibooky.exceptions.BookByTitleNotFoundException;
+import com.switchfully.digibooky.exceptions.IsbnAlreadyExistsException;
 import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
 import com.switchfully.digibooky.models.Author;
@@ -18,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
@@ -74,27 +76,17 @@ class BookServiceTest {
     @Test
     @DisplayName("Testing find book by Title when given good title")
     void givenTitle_whenGivenGoodTitle_getListOfBooks(){
-        //given
+
         List<Book> bookToFindList = new ArrayList<>();
-        bookToFindList.add(new Book("12","Jose",new Author("lola", "lolita"),"Magic and goblet to catch", false));
-        bookRepository.addBookList(bookToFindList);
-        String title = "Jose";
-        //then
-        Assertions.assertEquals(bookMapper.toBookSummaryDto(bookToFindList), bookService.getBookByTitle(title));
-
-
-    }
-
-    @Test
-    @DisplayName("Test find book by Title when given bad title")
-    void givenTitle_whenGivenBadTitle_throwException(){
+        bookToFindList.add(new Book("124444444","Ramon",new Author("lola", "lolita"),"Magic and goblet to catch", false));
         //given
         List<Book> bookToFindList = new ArrayList<>();
         bookToFindList.add(new Book("15","Ramon",new Author("lola", "lolita"),"Magic and goblet to catch", false));
         bookRepository.addBookList(bookToFindList);
-        String title = "7457";
+        String title = "Ramon";
         //then
-        Assertions.assertThrows(BookByTitleNotFoundException.class, () -> bookService.getBookByTitle(title));
+        Assertions.assertEquals(bookMapper.toBookSummaryDto(bookToFindList), bookService.getBookByTitle(title));
+
 
     }
 
@@ -114,16 +106,40 @@ class BookServiceTest {
         assertEquals("1234", bookToChange.getISBN());
     }
 
-//    @Test
-//    @DisplayName("Whene finding book by author get possible books")
-//    void getBookByAuthor_givenGoodAuthor_returnListOfMatches(){
-//        //given
-//        List<Book> bookToFindList = new ArrayList<>();
-//        bookToFindList.add(new Book("777","JasonTitle",new Author("Ronny", "Hamper"),"Dit is een test book", false));
-//        bookRepository.addBookList(bookToFindList);
-//        String author = "Ronny";
-//        //when+then
-//       / Assertions.assertEquals();
-//
-//    }
+    @Test
+    @DisplayName("When adding a book with unique ISBN book should present in repository")
+    void when_addingNewBook_shouldBeAlsoPresent_inRepository() {
+        //given
+        BookDto bookToRegister = new BookDto("999", "The Hobbit", new Author("Piet", "Hein"));
+        Book bookInRepository = new Book(bookToRegister.getISBN(), bookToRegister.getTitle(), bookToRegister.getAuthor());
+        //when
+        bookService.registerNewBook(bookToRegister);
+        //then
+        Assertions.assertTrue(bookRepository.getBookList().contains(bookInRepository));
+    }
+
+    @Test
+    @DisplayName("When adding a book with not unique ISBN, should throw exception")
+    void when_addingABookWithNoUniqueISBN_shouldThrowException() {
+        //given
+        BookDto bookToRegister = new BookDto("999", "The Hobbit", new Author("Piet", "Hein"));
+        //when
+        bookService.registerNewBook(bookToRegister);
+        //then
+        Assertions.assertThrows(IsbnAlreadyExistsException.class, ()-> bookService.registerNewBook(bookToRegister));
+
+    }
+    @Test
+    @DisplayName("When adding a book with not unique ISBN, should be correct")
+    void when_addingABookWithNoUniqueISBN_shouldBeCorrect() {
+        //given
+        BookDto bookToRegister = new BookDto("999", "The Hobbit", new Author("Piet", "Hein"));
+        //when
+        bookService.registerNewBook(bookToRegister);
+        Throwable throwAnException = catchThrowable(()-> bookService.registerNewBook(bookToRegister));
+        //then
+        Assertions.assertEquals("Book can't be registered ISBN already exists in database",throwAnException.getMessage());
+
+    }
+
 }

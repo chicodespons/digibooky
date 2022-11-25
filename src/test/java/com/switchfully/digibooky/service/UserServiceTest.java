@@ -98,4 +98,6 @@ class UserServiceTest {
 
         assertTrue(createdMember.getEmail().equals("loic@thisEmailShouldOnlyBeUsedForTests.com"));
     }
+
+
 }

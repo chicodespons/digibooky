@@ -7,6 +7,7 @@ import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.dto.BookSummaryDto;
 import com.switchfully.digibooky.exceptions.*;
 import com.switchfully.digibooky.dto.BookToUpdateToDto;
+import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.exceptions.BookByTitleNotFoundException;
 import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.models.Book;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -114,6 +116,4 @@ public class BookService {
         bookRepository.addBook(bookToRegister);
         return bookToRegister;
     }
-
-
 }
