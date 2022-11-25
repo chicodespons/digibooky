@@ -1,6 +1,5 @@
 package com.switchfully.digibooky.service;
 
-import com.switchfully.digibooky.dto.CreateMemberDto;
 import com.switchfully.digibooky.exceptions.*;
 import com.switchfully.digibooky.exceptions.IncorrectLogInInformationException;
 import org.junit.jupiter.api.Test;
@@ -10,26 +9,12 @@ import com.switchfully.digibooky.repository.BookRepository;
 import com.switchfully.digibooky.repository.LentBookRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.switchfully.digibooky.mapper.LentBookMapper;
-import com.switchfully.digibooky.models.*;
-import com.switchfully.digibooky.repository.BookRepository;
-import com.switchfully.digibooky.repository.LentBookRepository;
 import com.switchfully.digibooky.repository.UserRepository;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Base64;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
