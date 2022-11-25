@@ -12,10 +12,10 @@ import lombok.ToString;
 @ToString
 public class MemberDto {
 
-    private  String password;
-    private  String lastname;
-    private  String firstname;
-    private  String email;
+    private String password;
+    private String lastname;
+    private String firstname;
+    private String email;
     private String streetname;
     private int streetNumber;
     private int postcode;

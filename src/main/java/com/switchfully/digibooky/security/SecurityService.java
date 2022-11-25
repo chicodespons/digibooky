@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Base64;
 
 @Service
-public class  SecurityService {
+public class SecurityService {
     private final Logger logger = LoggerFactory.getLogger(SecurityService.class);
 
     private final UserRepository userRepository;

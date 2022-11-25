@@ -4,9 +4,7 @@ import com.switchfully.digibooky.controller.BookController;
 import com.switchfully.digibooky.controller.UserController;
 import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.dto.BookToUpdateToDto;
-import com.switchfully.digibooky.dto.CreateUserDto;
 import com.switchfully.digibooky.exceptions.IncorrectLogInInformationException;
-import com.switchfully.digibooky.exceptions.InvalidRoleException;
 import com.switchfully.digibooky.models.*;
 import com.switchfully.digibooky.repository.BookRepository;
 import com.switchfully.digibooky.repository.UserRepository;
@@ -16,7 +14,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.validation.BindingResult;
 
 import java.util.Base64;
 

@@ -67,11 +67,11 @@ public class UserRepository {
         return users;
     }
 
-    public void addMember(Member member){
-        userMap.put(member.getEmail(),member);
+    public void addMember(Member member) {
+        userMap.put(member.getEmail(), member);
     }
 
-    public void addUser(User user){
+    public void addUser(User user) {
         userMap.put(user.getEmail(), user);
     }
 }
