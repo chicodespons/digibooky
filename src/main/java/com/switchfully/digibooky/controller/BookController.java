@@ -3,7 +3,6 @@ package com.switchfully.digibooky.controller;
 import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.dto.BookSummaryDto;
 import com.switchfully.digibooky.dto.BookToUpdateToDto;
-import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.models.Book;
 import com.switchfully.digibooky.models.Feature;
 import com.switchfully.digibooky.security.SecurityService;
@@ -45,7 +44,7 @@ public class BookController {
     //Update book     http://localhost:8080/books/updatebook/{isbn}
     @PutMapping(value = "/updatebook/{isbn}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public BookDto updateProfessor(@RequestBody BookToUpdateToDto book, @PathVariable String isbn, @RequestHeader String authorization) {
+    public BookDto updateBook(@RequestBody BookToUpdateToDto book, @PathVariable String isbn, @RequestHeader String authorization) {
         securityService.validateAuthorization(authorization, Feature.UPDATE_BOOK);
         return bookService.updateBook(book, isbn);
     }

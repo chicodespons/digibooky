@@ -46,4 +46,9 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     protected void invalidRoleException(InvalidRoleException ex, HttpServletResponse response) throws IOException{
         response.sendError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
     }
+
+    @ExceptionHandler(IncorrectLogInInformationException.class)
+    protected void incorrectLogInInformation(IncorrectLogInInformationException ex, HttpServletResponse response) throws IOException{
+        response.sendError(HttpStatus.FORBIDDEN.value(), ex.getMessage());
+    }
 }

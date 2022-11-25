@@ -1,5 +1,6 @@
 package com.switchfully.digibooky.security;
 
+import com.switchfully.digibooky.exceptions.IncorrectLogInInformationException;
 import com.switchfully.digibooky.models.Feature;
 import com.switchfully.digibooky.models.User;
 import com.switchfully.digibooky.repository.UserRepository;
@@ -24,11 +25,11 @@ public class  SecurityService {
         User user = userRepository.getUser(emailPassword.getEmail());
         if (user == null || !doesPasswordMatch(user, emailPassword.getPassword())) {
             logger.error("Incorrect login try: " + emailPassword.getEmail() + emailPassword.getPassword());
-            throw new IllegalArgumentException("Given combination of email and password is not correct");
+            throw new IncorrectLogInInformationException("Given combination of email and password is not correct");
         }
         if (!canHaveAccessTo(user, feature)) {
             logger.error("User: " + emailPassword.getEmail() + " ,does not have access to: " + feature);
-            throw new IllegalArgumentException("User does not have access.");
+            throw new IncorrectLogInInformationException("User does not have access.");
         }
     }
 

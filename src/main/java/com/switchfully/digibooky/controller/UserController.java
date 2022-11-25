@@ -29,6 +29,7 @@ public class UserController {
         this.securityService = securityService;
     }
 
+    // methode mag weg denk ik
     @GetMapping(path = "/all")
     @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getAll() {
