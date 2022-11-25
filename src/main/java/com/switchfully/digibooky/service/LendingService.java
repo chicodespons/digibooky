@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class LendingService {
@@ -30,7 +31,14 @@ public class LendingService {
     private final SecurityService securityService;
     private final LentBookMapper lentBookMapper;
 
-
+    public LendingService(LentBookRepository lentBookRepository, UserRepository userRepository, BookRepository bookRepository, BookMapper bookMapper, SecurityService securityService, LentBookMapper lentBookMapper) {
+        this.lentBookRepository = lentBookRepository;
+        this.userRepository = userRepository;
+        this.bookRepository = bookRepository;
+        this.bookMapper = bookMapper;
+        this.securityService = securityService;
+        this.lentBookMapper = lentBookMapper;
+    }
 
 
     public List<LentBook> getAllLentBooks() {
