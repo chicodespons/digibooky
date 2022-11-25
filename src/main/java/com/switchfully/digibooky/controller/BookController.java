@@ -3,6 +3,7 @@ package com.switchfully.digibooky.controller;
 import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.dto.BookSummaryDto;
 import com.switchfully.digibooky.dto.BookToUpdateToDto;
+import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.models.Book;
 import com.switchfully.digibooky.models.Feature;
 import com.switchfully.digibooky.security.SecurityService;
@@ -62,6 +63,13 @@ public class BookController {
     public List<BookSummaryDto> getBookByTitle(@RequestHeader String authorization, @RequestParam(required = false) String search) {
         securityService.validateAuthorization(authorization, Feature.GET_BOOK_BY_TITLE);
         return bookService.getBookByTitle(search);
+    }
+
+    @GetMapping(path = "/getbookbyauthor")
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookSummaryDto> getBookByAuthor(@RequestHeader String authorization, @RequestParam(required = false) String search) {
+        securityService.validateAuthorization(authorization, Feature.GET_BOOK_BY_AUTHOR);
+        return bookService.getBookByAuthor(search);
     }
 
     @DeleteMapping(path= "/deletebook/{isbn}")

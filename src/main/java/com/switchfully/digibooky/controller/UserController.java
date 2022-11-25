@@ -30,6 +30,7 @@ public class UserController {
     }
 
     @GetMapping(path = "/all")
+    @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getAll() {
         return userService.getAllUsers();
     }
@@ -42,6 +43,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/new/member", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
     public MemberDto registerNewMember(@Valid @RequestBody CreateMemberDto createMemberDto, BindingResult errors) throws InssAlreadyExistsException, InvalidEmailAddressException, UserCreationException {
         if (errors.hasErrors()) {
             throw new UserCreationException();
@@ -50,6 +52,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/new", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
     public UserDto registerNewUser(@Valid @RequestBody CreateUserDto createUserDto,
                                         @RequestHeader String authorization, BindingResult errors) throws UserCreationException, InvalidEmailAddressException {
         if (errors.hasErrors()) {

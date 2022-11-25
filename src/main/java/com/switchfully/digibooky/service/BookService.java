@@ -1,17 +1,22 @@
 package com.switchfully.digibooky.service;
 
+import com.switchfully.digibooky.models.Author;
 import com.switchfully.digibooky.providers.RegexProvider;
 import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
 import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.dto.BookSummaryDto;
 import com.switchfully.digibooky.exceptions.*;
 import com.switchfully.digibooky.dto.BookToUpdateToDto;
+import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.exceptions.BookByTitleNotFoundException;
 import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.models.Book;
 import com.switchfully.digibooky.repository.BookRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -48,6 +53,47 @@ public class BookService {
             return bookMapper.toBookSummaryDto(booksFound);
         } else
             throw new BookByTitleNotFoundException("Book not found for given Title");
+    }
+
+    public List<BookSummaryDto> getBookByAuthor(String author) {
+
+        List<Book> bookList = bookRepository.getBookList();
+        List<String> authors = getAuthorsAsStrings(bookList);
+
+        List<Author> authorMatches = getAuthorMatches(author, authors);
+
+        List<Book> booksThatMatch = getBooksThatMatch(bookList, authorMatches);
+
+        if(!booksThatMatch.isEmpty()) {
+            return bookMapper.toBookSummaryDto(booksThatMatch);
+        } else
+            throw new BookByAuthorNotFoundException("book not found for given author");
+    }
+
+    private static List<Book> getBooksThatMatch(List<Book> bookList, List<Author> authorMatches) {
+        List<Book> booksThatMatch = new ArrayList<>();
+
+        for (Book book : bookList) {
+            for (Author author1 : authorMatches){
+                if (book.getAuthor().equals(author1)) {
+                    booksThatMatch.add(book);
+                }
+            }
+        }
+        return booksThatMatch;
+    }
+
+    private static List<Author> getAuthorMatches(String author, List<String> authors) {
+        return authors.stream()
+                .filter(a -> RegexProvider.isContain(a.toLowerCase(), author.toLowerCase()))
+                .map(a -> new Author(a.substring(a.indexOf(" ") + 1), a.substring(0, a.indexOf(" "))))
+                .toList();
+    }
+
+    private static List<String> getAuthorsAsStrings(List<Book> bookList) {
+        return bookList.stream()
+                .map(book -> book.getAuthor().getFirstname()+ " " + book.getAuthor().getLastname())
+                .toList();
     }
 
     public BookDto updateBook(BookToUpdateToDto book, String isbn) {

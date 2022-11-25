@@ -6,9 +6,9 @@ import java.util.List;
 import static com.switchfully.digibooky.models.Feature.*;
 
 public enum Role {
-    MEMBER(new ArrayList<>(List.of(GET_ALL_BOOKS, GET_BOOK_BY_ID))),
-    ADMIN(new ArrayList<>(List.of(GET_ALL_BOOKS,  GET_ALL_MEMBERS, GET_BOOK_BY_ISBN, LIBRARIAN_REGISTRATION))),
-    LIBRARIAN(new ArrayList<>(List.of(GET_ALL_BOOKS, GET_BOOK_BY_ISBN, UPDATE_BOOK, REGISTER_BOOK,GET_BOOK_BY_TITLE, DELETE_BOOK)));
+    MEMBER(new ArrayList<>(List.of(GET_ALL_BOOKS, GET_BOOK_BY_ID, GET_BOOK_BY_ISBN, GET_BOOK_BY_TITLE, GET_BOOK_BY_AUTHOR))),
+    ADMIN(new ArrayList<>(List.of(GET_ALL_BOOKS,  GET_ALL_MEMBERS, GET_BOOK_BY_ISBN, GET_BOOK_BY_TITLE, GET_BOOK_BY_AUTHOR, LIBRARIAN_REGISTRATION))),
+    LIBRARIAN(new ArrayList<>(List.of(GET_ALL_BOOKS, GET_BOOK_BY_ISBN, UPDATE_BOOK, REGISTER_BOOK,GET_BOOK_BY_TITLE, DELETE_BOOK, GET_BOOK_BY_AUTHOR)));
     // add authorization tussen haakjes wanneer nodig, add dan ook een getter
     // and then you keep adding hé;
     private List<Feature> featureList;
