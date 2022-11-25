@@ -47,4 +47,10 @@ public class SecurityService {
         String password = decodedEmailAndPassword.substring(decodedEmailAndPassword.indexOf(":") + 1);
         return new EmailPassword(email, password);
     }
+
+    public String getUserIdByAuthorizationString(String authorization) {
+        EmailPassword emailPassword = getEmailPassword(authorization);
+        User user = userRepository.getUser(emailPassword.getEmail());
+        return user.getUserId();
+    }
 }

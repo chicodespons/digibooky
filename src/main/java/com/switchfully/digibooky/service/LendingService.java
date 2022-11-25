@@ -1,14 +1,20 @@
 package com.switchfully.digibooky.service;
 
 import com.switchfully.digibooky.dto.BookDto;
+import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
+import com.switchfully.digibooky.exceptions.BookNotAvailableException;
+import com.switchfully.digibooky.exceptions.IncorrectLogInInformationException;
 import com.switchfully.digibooky.dto.LentBookDto;
 import com.switchfully.digibooky.dto.LentBookOverdueDto;
 import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.mapper.LentBookMapper;
 import com.switchfully.digibooky.models.Book;
 import com.switchfully.digibooky.models.LentBook;
+import com.switchfully.digibooky.models.User;
+import com.switchfully.digibooky.repository.BookRepository;
 import com.switchfully.digibooky.repository.LentBookRepository;
 import com.switchfully.digibooky.repository.UserRepository;
+import com.switchfully.digibooky.security.SecurityService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,17 +25,13 @@ import java.util.Map;
 public class LendingService {
     private final LentBookRepository lentBookRepository;
     private final UserRepository userRepository;
+    private final BookRepository bookRepository;
     private final BookMapper bookMapper;
-
+    private final SecurityService securityService;
     private final LentBookMapper lentBookMapper;
 
 
-    public LendingService(LentBookRepository lentBookRepository, UserRepository userRepository, BookMapper bookMapper, LentBookMapper lentBookMapper) {
-        this.lentBookRepository = lentBookRepository;
-        this.userRepository = userRepository;
-        this.bookMapper = bookMapper;
-        this.lentBookMapper = lentBookMapper;
-    }
+
 
     public List<LentBook> getAllLentBooks() {
         return lentBookRepository.getAllBooks();
@@ -41,6 +43,25 @@ public class LendingService {
         book.setHidden(false);
         lentBookRepository.removeLending(lendingID);
         return bookMapper.toDto(book);
+    }
+
+    public LentBook lendBook(String authorization, String bookIsbn) throws BookNotAvailableException {
+        String userId = securityService.getUserIdByAuthorizationString(authorization);
+        Optional<User> user = userRepository.getUserById(userId);
+        if (user.isEmpty()) {
+            throw new IncorrectLogInInformationException();
+        }
+
+        Optional<Book> book = bookRepository.getBookByISBN(bookIsbn);
+        if (book.isEmpty()) {
+            throw new BookByISBNNotFoundException("The ISNB you provided could not be found.");
+        }
+        if (book.get().isHidden()) {
+            throw new BookNotAvailableException();
+        }
+        book.get().setHidden(true);
+        LentBook bookToLend = new LentBook(book.get(), user.get());
+        return lentBookRepository.lendBook(bookToLend);
     }
 
     public List<LentBookDto> getAllLentBooksByMember(String memberEmail) {
@@ -58,16 +79,4 @@ public class LendingService {
                 .toList();
         return lentBookMapper.lentBookOverdueDtoList(lentOverDueBooks);
     }
-
-
-//    public LentBook lendBook(String userId, String bookIsbn) {
-//        User user = userRepository.getUserById(userId);
-//        return lentBookRepository.lendBook();
-//    }
-
-    //    As a member I want to be able to borrow a book, so that I can allocate a book to myself for a certain duration.
-//
-//    The member's user identification number and the book's ISBN should be provided.
-//    A unique lending identification number and a due date should be registered, by default this date is TODAY + 3 WEEKS
-//    A book can only be lent once at a time.
 }

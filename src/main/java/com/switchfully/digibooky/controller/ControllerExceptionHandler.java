@@ -53,4 +53,9 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     protected void incorrectLogInInformation(IncorrectLogInInformationException ex, HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.FORBIDDEN.value(), ex.getMessage());
     }
+
+    @ExceptionHandler(BookNotAvailableException.class)
+    protected void bookNotAvailableException(BookNotAvailableException ex, HttpServletResponse response) throws IOException {
+        response.sendError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+    }
 }

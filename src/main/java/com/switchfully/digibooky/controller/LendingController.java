@@ -3,6 +3,7 @@ package com.switchfully.digibooky.controller;
 import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.dto.LentBookDto;
 import com.switchfully.digibooky.dto.LentBookOverdueDto;
+import com.switchfully.digibooky.exceptions.BookNotAvailableException;
 import com.switchfully.digibooky.models.Feature;
 import com.switchfully.digibooky.models.LentBook;
 import com.switchfully.digibooky.security.SecurityService;
@@ -38,11 +39,12 @@ public class LendingController {
         return lendingService.returnBook(leningId);
     }
 
-//    @PostMapping(path = "{nookIsbn}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseStatus(HttpStatus.OK)
-//    public LentBook lendBook(@RequestHeader String authorization, @PathVariable String bookIsbn) {
-//        return lendingService.lendBook(authorization, bookIsbn);
-//    }
+    @PostMapping(path = "{bookIsbn}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public LentBook lendBook(@RequestHeader String authorization, @PathVariable String bookIsbn) throws BookNotAvailableException {
+        securityService.validateAuthorization(authorization, Feature.LEND_BOOK);
+        return lendingService.lendBook(authorization, bookIsbn);
+    }
 
     @GetMapping(path = "/lentbooksbymember/{memberEmail}")
     @ResponseStatus(HttpStatus.OK)

@@ -43,5 +43,8 @@ public class LentBookRepository {
         lentBookList.remove(lendingID);
     }
 
-
+    public LentBook lendBook(LentBook lentBook) {
+        lentBookList.put(lentBook.getLendingID(), lentBook);
+        return lentBookList.get(lentBook.getLendingID());
+    }
 }

@@ -1,13 +1,11 @@
 package com.switchfully.digibooky.repository;
 
-import com.switchfully.digibooky.models.Author;
 import com.switchfully.digibooky.models.Book;
-import com.switchfully.digibooky.models.Member;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashMap;
+import java.util.Optional;
 
 @Repository
 public class BookRepository {
@@ -39,5 +37,11 @@ public class BookRepository {
 
     public void addBook(Book book) {
         bookList.add(book);
+    }
+
+    public Optional<Book> getBookByISBN(String bookIsbn) {
+        return bookList.stream()
+                .filter(book -> book.getISBN().equals(bookIsbn))
+                .findFirst();
     }
 }
