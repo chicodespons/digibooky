@@ -80,6 +80,7 @@ class BookServiceTest {
         List<Book> bookToFindList = new ArrayList<>();
         bookToFindList.add(new Book("124444444","Ramon",new Author("lola", "lolita"),"Magic and goblet to catch", false));
         //given
+        bookToFindList.add(new Book("15","Ramon",new Author("lola", "lolita"),"Magic and goblet to catch", false));
         bookRepository.addBookList(bookToFindList);
         String title = "Ramon";
         //then
