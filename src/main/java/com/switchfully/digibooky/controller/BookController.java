@@ -71,4 +71,19 @@ public class BookController {
         securityService.validateAuthorization(authorization, Feature.GET_BOOK_BY_AUTHOR);
         return bookService.getBookByAuthor(search);
     }
+
+
+
+    //Return a book
+    @PostMapping(path = "/returnbook", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public BookDto returnBook(@RequestHeader String authorization, @RequestBody BookDto book) {
+        securityService.validateAuthorization(authorization, Feature.RETURN_BOOK);
+        return bookService.ReturnBook(book);
+    }
+
+    // Borrow a book
+//    @GetMapping(path = "/borrowbook")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<BookDto> getBookBy
 }

@@ -14,7 +14,7 @@ public class LendingService {
         this.bookMapper = bookMapper;
     }
 
-    //    As a member I want to be able to borrow a book, so that I can allocate a book to myself for a certain duration.
+//    As a member I want to be able to borrow a book, so that I can allocate a book to myself for a certain duration.
 //
 //    The member's user identification number and the book's ISBN should be provided.
 //    A unique lending identification number and a due date should be registered, by default this date is TODAY + 3 WEEKS
