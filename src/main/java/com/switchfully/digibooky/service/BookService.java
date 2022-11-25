@@ -32,14 +32,14 @@ public class BookService {
     public List<BookDto> getAllBooks() {
         return bookMapper.toDto(bookRepository.getBookList()
                 .stream()
-                .filter(book -> book.isHidden()==false)
+                .filter(book -> book.isHidden() == false)
                 .toList());
     }
 
     public List<BookSummaryDto> getBookByISBN(String ISBN) {
         List<Book> bookList = bookRepository.getBookList();
         List<Book> booksFound = bookList.stream().filter(b -> RegexProvider.isContain(b.getISBN(), ISBN)).toList();
-        if(!booksFound.isEmpty()) {
+        if (!booksFound.isEmpty()) {
             return bookMapper.toBookSummaryDto(booksFound);
         } else
             throw new BookByISBNNotFoundException("Book not found for given ISBN");
@@ -49,7 +49,7 @@ public class BookService {
     public List<BookSummaryDto> getBookByTitle(String title) {
         List<Book> bookList = bookRepository.getBookList();
         List<Book> booksFound = bookList.stream().filter(b -> RegexProvider.isContain(b.getTitle().toLowerCase(), title.toLowerCase())).toList();
-        if(!booksFound.isEmpty()) {
+        if (!booksFound.isEmpty()) {
             return bookMapper.toBookSummaryDto(booksFound);
         } else
             throw new BookByTitleNotFoundException("Book not found for given Title");
@@ -64,7 +64,7 @@ public class BookService {
 
         List<Book> booksThatMatch = getBooksThatMatch(bookList, authorMatches);
 
-        if(!booksThatMatch.isEmpty()) {
+        if (!booksThatMatch.isEmpty()) {
             return bookMapper.toBookSummaryDto(booksThatMatch);
         } else
             throw new BookByAuthorNotFoundException("book not found for given author");
@@ -74,7 +74,7 @@ public class BookService {
         List<Book> booksThatMatch = new ArrayList<>();
 
         for (Book book : bookList) {
-            for (Author author1 : authorMatches){
+            for (Author author1 : authorMatches) {
                 if (book.getAuthor().equals(author1)) {
                     booksThatMatch.add(book);
                 }
@@ -92,7 +92,7 @@ public class BookService {
 
     private static List<String> getAuthorsAsStrings(List<Book> bookList) {
         return bookList.stream()
-                .map(book -> book.getAuthor().getFirstname()+ " " + book.getAuthor().getLastname())
+                .map(book -> book.getAuthor().getFirstname() + " " + book.getAuthor().getLastname())
                 .toList();
     }
 
@@ -124,7 +124,7 @@ public class BookService {
         Book foundBook = bookRepository.getBookList().stream()
                 .filter(book -> book.getISBN().equals(isbn))
                 .findFirst()
-                .orElseThrow(()-> new BookByISBNNotFoundException("No book found for given ISBN"));
+                .orElseThrow(() -> new BookByISBNNotFoundException("No book found for given ISBN"));
         foundBook.setHidden(true);
     }
 
@@ -132,7 +132,7 @@ public class BookService {
         Book foundBook = bookRepository.getBookList().stream()
                 .filter(book -> book.getISBN().equals(isbn))
                 .findFirst()
-                .orElseThrow(()-> new BookByISBNNotFoundException("No book found for given ISBN"));
+                .orElseThrow(() -> new BookByISBNNotFoundException("No book found for given ISBN"));
         foundBook.setHidden(false);
     }
 }

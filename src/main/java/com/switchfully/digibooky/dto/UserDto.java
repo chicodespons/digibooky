@@ -1,8 +1,10 @@
 package com.switchfully.digibooky.dto;
 
 import com.switchfully.digibooky.models.Role;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,9 +15,6 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class UserDto {
-    @NotNull
-    @NotEmpty
-    private final String password;
     @NotNull
     @NotEmpty
     private final String lastname;
@@ -29,8 +28,8 @@ public class UserDto {
     @NotEmpty
     private final Role role;
 
-    public UserDto(String password, String lastname, String firstname, String email, Role role) {
-        this.password = password;
+    public UserDto(String lastname, String firstname, String email, Role role) {
+
         this.lastname = lastname;
         this.firstname = firstname;
         this.email = email;
