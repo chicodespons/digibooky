@@ -1,13 +1,14 @@
 package com.switchfully.digibooky.service;
 
+import com.switchfully.digibooky.dto.BookDto;
+import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
 import com.switchfully.digibooky.mapper.BookMapper;
+import com.switchfully.digibooky.models.Book;
 import com.switchfully.digibooky.models.LentBook;
 import com.switchfully.digibooky.models.User;
 import com.switchfully.digibooky.repository.LentBookRepository;
 import com.switchfully.digibooky.repository.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -26,6 +27,16 @@ public class LendingService {
     public List<LentBook> getAllLentBooks() {
         return lentBookRepository.getAllBooks();
     }
+
+    public BookDto returnBook(String lendingID) {
+        LentBook lentBook = lentBookRepository.getLendingBookById(lendingID);
+        Book book = lentBook.getBook();
+        book.setHidden(false);
+        lentBookRepository.removeLending(lendingID);
+        return bookMapper.toDto(book);
+    }
+
+
 
 //    public LentBook lendBook(String userId, String bookIsbn) {
 //        User user = userRepository.getUserById(userId);

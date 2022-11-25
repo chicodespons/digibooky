@@ -2,6 +2,7 @@ package com.switchfully.digibooky.service;
 
 import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.dto.BookToUpdateToDto;
+import com.switchfully.digibooky.exceptions.BookByAuthorNotFoundException;
 import com.switchfully.digibooky.exceptions.IsbnAlreadyExistsException;
 import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
@@ -54,8 +55,8 @@ class BookServiceTest {
     @DisplayName("Testing method get all books, to see that it returns a list containing all book in repository")
     void checkingThatGetAllBooks_returnsListOfDtoBooks() {
         //given
-        Book bookOne = new Book("test isbn:789","Samson & Gert",new Author("lola", "lolita"),"Weird talking dog and rich owner", false);
-        Book bookTwo = new Book("test isbn: 4594321","Samson & Gert",new Author("Sven", "Boeckstaens"),"Weird talking dog and rich owner", false);
+        Book bookOne = new Book("198165","Samson & Gert",authorRepository.getAuthorList().get(2),"Weird talking dog and rich owner", false);
+        Book bookTwo = new Book("25000","Samson & Gert",authorRepository.getAuthorList().get(2),"Weird talking dog and rich owner", false);
         bookRepository.addBook(bookOne);
         bookRepository.addBook(bookTwo);
         //then
@@ -87,6 +88,32 @@ class BookServiceTest {
         Assertions.assertEquals(bookMapper.toBookSummaryDto(bookToFindList), bookService.getBookByTitle(title));
 
 
+    }
+
+    @Test
+    @DisplayName("When finding book by author, given good author return list of booksummary")
+    void getBookByAuthor_givenGoodAuthor_returnListOfBooks(){
+        //Given
+        List<Book> bookToFindList = new ArrayList<>();
+        bookToFindList.add(new Book("77","Ronny",new Author("Ron", "Ronest"),"Ronny his book", false));
+        //given
+        bookRepository.addBookList(bookToFindList);
+        String author = "Ron";
+        //then
+        Assertions.assertEquals(bookMapper.toBookSummaryDto(bookToFindList), bookService.getBookByAuthor(author));
+    }
+
+    @Test
+    @DisplayName("When finding book by author, given bad author return exception")
+    void getBookByAuthor_givenBadAuthor_throwException(){
+        //Given
+        List<Book> bookToFindList = new ArrayList<>();
+        bookToFindList.add(new Book("47855998","HarrySnarry",new Author("Harry", "Snarry"),"Harry Snarries book", false));
+        //given
+        bookRepository.addBookList(bookToFindList);
+        String author = "123";
+        //then
+        Assertions.assertThrows(BookByAuthorNotFoundException.class, () -> bookService.getBookByAuthor(author));
     }
 
 

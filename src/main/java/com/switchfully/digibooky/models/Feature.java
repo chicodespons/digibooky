@@ -11,5 +11,7 @@ public enum Feature {
     GET_BOOK_BY_TITLE,
     REGISTER_BOOK,
     GET_BOOK_BY_AUTHOR,
-    DELETE_BOOK ;
+    RETURN_BOOK,
+    DELETE_BOOK;
+
 }

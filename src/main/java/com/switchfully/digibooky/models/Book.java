@@ -34,11 +34,11 @@ public class Book {
     }
 
     public Book(String isbn, String title, Author author, boolean isHidden) {
-        this(isbn, title, author, "No summary avaible", isHidden);
+        this(isbn, title, author, "No summary available", isHidden);
     }
 
     public Book(String isbn, String title, Author author) {
-        this(isbn, title, author, "No summary avaible", false);
+        this(isbn, title, author, "No summary available", false);
     }
 
 

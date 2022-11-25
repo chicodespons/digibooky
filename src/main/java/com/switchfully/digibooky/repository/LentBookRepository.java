@@ -1,5 +1,6 @@
 package com.switchfully.digibooky.repository;
 
+import com.switchfully.digibooky.models.Book;
 import com.switchfully.digibooky.models.LentBook;
 import com.switchfully.digibooky.models.User;
 import org.springframework.stereotype.Repository;
@@ -21,12 +22,22 @@ public class LentBookRepository {
     }
 
     public void mocking() {
-        LentBook lentBook = new LentBook(bookRepository.getBookList().get(0), userRepository.getUser("loic@email.com"));
+        Book bookToLend = bookRepository.getBookList().get(0);
+        bookToLend.setHidden(true);
+        LentBook lentBook = new LentBook(bookToLend, userRepository.getUser("loic@email.com"));
         lentBookList.put(lentBook.getLendingID(), lentBook);
     }
 
     public List<LentBook> getAllBooks() {
         return lentBookList.values().stream()
                 .toList();
+    }
+
+    public LentBook getLendingBookById(String lendingID) {
+        return lentBookList.get(lendingID);
+    }
+
+    public void removeLending(String lendingID) {
+        lentBookList.remove(lendingID);
     }
 }
