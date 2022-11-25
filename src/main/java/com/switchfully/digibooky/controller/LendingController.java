@@ -26,6 +26,6 @@ public class LendingController {
 //    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 //    @ResponseStatus(HttpStatus.OK)
 //    public LentBook lendBook(@RequestBody String userId, String bookIsbn) {
-//        return lendingService.lendBook();
+//        return lendingService.lendBook(userId, bookIsbn);
 //    }
 }

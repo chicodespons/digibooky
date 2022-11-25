@@ -2,7 +2,9 @@ package com.switchfully.digibooky.service;
 
 import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.models.LentBook;
+import com.switchfully.digibooky.models.User;
 import com.switchfully.digibooky.repository.LentBookRepository;
+import com.switchfully.digibooky.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,10 +14,12 @@ import java.util.List;
 @Service
 public class LendingService {
     private final LentBookRepository lentBookRepository;
+    private final UserRepository userRepository;
     private final BookMapper bookMapper;
 
-    public LendingService(LentBookRepository lentBookRepository, BookMapper bookMapper) {
+    public LendingService(LentBookRepository lentBookRepository, UserRepository userRepository, BookMapper bookMapper) {
         this.lentBookRepository = lentBookRepository;
+        this.userRepository = userRepository;
         this.bookMapper = bookMapper;
     }
 
@@ -24,6 +28,7 @@ public class LendingService {
     }
 
 //    public LentBook lendBook(String userId, String bookIsbn) {
+//        User user = userRepository.getUserById(userId);
 //        return lentBookRepository.lendBook();
 //    }
 
