@@ -4,6 +4,7 @@ import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.dto.BookSummaryDto;
 import com.switchfully.digibooky.models.Book;
 import com.switchfully.digibooky.models.LentBook;
+import com.switchfully.digibooky.models.User;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -35,7 +36,7 @@ public class BookMapper {
                 .toList();
     }
 
-    public LentBook toLentBook(Book book) {
-        return new LentBook(book);
+    public LentBook toLentBook(Book book, User user) {
+        return new LentBook(book, user);
     }
 }

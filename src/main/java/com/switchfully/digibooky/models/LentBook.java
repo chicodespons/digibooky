@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.UUID;
 
 @Getter
@@ -15,16 +14,17 @@ public class LentBook {
 
     private final Book book;
     private final String lendingID;
-    private final LocalDate dueDate;
+    private LocalDate dueDate;
+    private final User user;
 
-
-    public LentBook(Book book) {
+    public LentBook(Book book, User user) {
         this.book = book;
         this.lendingID = UUID.randomUUID().toString();
-        this.dueDate = setDueDate();
+        setDueDate();
+        this.user = user;
     }
 
-    private LocalDate setDueDate() {
-        return LocalDate.now().plusDays(21);
+    private void setDueDate() {
+        dueDate = LocalDate.now();
     }
 }
