@@ -9,5 +9,6 @@ public enum Feature {
     TEST_FEATURE,
     UPDATE_BOOK,
     GET_BOOK_BY_TITLE,
-    REGISTER_BOOK;
+    REGISTER_BOOK,
+    DELETE_BOOK ;
 }

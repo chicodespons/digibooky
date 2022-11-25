@@ -1,5 +1,6 @@
 package com.switchfully.digibooky.service;
 
+import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.dto.BookToUpdateToDto;
 import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
@@ -22,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class BookServiceTest {
-
 
     @Autowired
     private BookService bookService;
@@ -51,8 +51,8 @@ class BookServiceTest {
     @DisplayName("Testing method get all books, to see that it returns a list containing all book in repository")
     void checkingThatGetAllBooks_returnsListOfDtoBooks() {
         //given
-        Book bookOne = new Book("198165","Samson & Gert",authorRepository.getAuthorList().get(2),"Weird talking dog and rich owner", false);
-        Book bookTwo = new Book("25000","Samson & Gert",authorRepository.getAuthorList().get(2),"Weird talking dog and rich owner", false);
+        Book bookOne = new Book("test isbn:789","Samson & Gert",new Author("lola", "lolita"),"Weird talking dog and rich owner", false);
+        Book bookTwo = new Book("test isbn: 4594321","Samson & Gert",new Author("Sven", "Boeckstaens"),"Weird talking dog and rich owner", false);
         bookRepository.addBook(bookOne);
         bookRepository.addBook(bookTwo);
         //then
@@ -99,5 +99,47 @@ class BookServiceTest {
         assertEquals(bookToUpdateTo.getTitle(), bookToChange.getTitle());
         assertEquals(bookToUpdateTo.isHidden(), bookToChange.isHidden());
         assertEquals("1234", bookToChange.getISBN());
+    }
+
+    @Test
+    @DisplayName("When soft deleting a book, book should be hidden and still in book repository")
+    void whenSoftDeletingABook_bookShouldBeHidden_butStillInRepository(){
+        //given
+        Book bookInRepository = new Book("124444444","Ramon",new Author("lola", "lolita"),"Magic and goblet to catch", false);
+        bookRepository.addBook(bookInRepository);
+        //when
+        bookService.deleteBookByIsbn(bookInRepository.getISBN());
+        //then
+        assertTrue(bookInRepository.isHidden());
+        Assertions.assertTrue(bookRepository.getBookList().contains(bookInRepository));
+    }
+    @Test
+    @DisplayName("When soft deleting a book by an Isbn that is not valid, should throw exception")
+    void whenSoftDeletingAbookWithUnknownISBN_exceptionShouldBeThrown(){
+        //then
+        Assertions.assertThrows(BookByISBNNotFoundException.class,()-> bookService.deleteBookByIsbn("This is not a good isbn"));
+    }
+    @Test
+    @DisplayName("When undeleting a book, it should be no longer hidden")
+    void whenUndeletingADeleteBook_itShouldNoLongerBeHidden_andShowUpInTheBookDTOList(){
+        //given
+        Book bookInRepository = new Book("124444444","Ramon",new Author("lola", "lolita"),"Magic and goblet to catch", false);
+        bookRepository.addBook(bookInRepository);
+        bookService.deleteBookByIsbn(bookInRepository.getISBN());
+        //when
+        bookService.unDeleteBookByIsbn(bookInRepository.getISBN());
+        //then
+        assertFalse(bookInRepository.isHidden());
+    }
+
+    @Test
+    @DisplayName("Testing method get all books, should not return hidden books")
+    void checkingThatGetAllBooks_doesNotreturnsHiddenBooks() {
+        //given
+        Book bookOne = new Book("this a test isbn: 159489","Test Book",new Author("Sven","Boeck"),"This book is so weird", true);
+        //when
+        bookRepository.addBook(bookOne);
+        //then
+        Assertions.assertFalse(bookService.getAllBooks().contains(bookMapper.toDto(bookOne)));
     }
 }
