@@ -114,16 +114,16 @@ class BookServiceTest {
         assertEquals("1234", bookToChange.getISBN());
     }
 
-    @Test
-    @DisplayName("Whene finding book by author get possible books")
-    void getBookByAuthor_givenGoodAuthor_returnListOfMatches(){
-        //given
-        List<Book> bookToFindList = new ArrayList<>();
-        bookToFindList.add(new Book("777","JasonTitle",new Author("Ronny", "Hamper"),"Dit is een test book", false));
-        bookRepository.addBookList(bookToFindList);
-        String author = "Ronny";
-        //when+then
-        Assertions.assertEquals();
-
-    }
+//    @Test
+//    @DisplayName("Whene finding book by author get possible books")
+//    void getBookByAuthor_givenGoodAuthor_returnListOfMatches(){
+//        //given
+//        List<Book> bookToFindList = new ArrayList<>();
+//        bookToFindList.add(new Book("777","JasonTitle",new Author("Ronny", "Hamper"),"Dit is een test book", false));
+//        bookRepository.addBookList(bookToFindList);
+//        String author = "Ronny";
+//        //when+then
+//       / Assertions.assertEquals();
+//
+//    }
 }
