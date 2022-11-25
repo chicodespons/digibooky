@@ -1,6 +1,5 @@
 package com.switchfully.digibooky.service;
-
-import com.switchfully.digibooky.RegexProvider;
+import com.switchfully.digibooky.providers.RegexProvider;
 import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
 import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.dto.BookSummaryDto;

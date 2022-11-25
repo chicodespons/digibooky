@@ -1,6 +1,8 @@
 package com.switchfully.digibooky.service;
 
+import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.dto.BookToUpdateToDto;
+import com.switchfully.digibooky.exceptions.IsbnAlreadyExistsException;
 import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
 import com.switchfully.digibooky.models.Author;
@@ -17,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
@@ -100,4 +103,41 @@ class BookServiceTest {
         assertEquals(bookToUpdateTo.isHidden(), bookToChange.isHidden());
         assertEquals("1234", bookToChange.getISBN());
     }
+
+    @Test
+    @DisplayName("When adding a book with unique ISBN book should present in repository")
+    void when_addingNewBook_shouldBeAlsoPresent_inRepository() {
+        //given
+        BookDto bookToRegister = new BookDto("999", "The Hobbit", new Author("Piet", "Hein"));
+        Book bookInRepository = new Book(bookToRegister.getISBN(), bookToRegister.getTitle(), bookToRegister.getAuthor());
+        //when
+        bookService.registerNewBook(bookToRegister);
+        //then
+        Assertions.assertTrue(bookRepository.getBookList().contains(bookInRepository));
+    }
+
+    @Test
+    @DisplayName("When adding a book with not unique ISBN, should throw exception")
+    void when_addingABookWithNoUniqueISBN_shouldThrowException() {
+        //given
+        BookDto bookToRegister = new BookDto("999", "The Hobbit", new Author("Piet", "Hein"));
+        //when
+        bookService.registerNewBook(bookToRegister);
+        //then
+        Assertions.assertThrows(IsbnAlreadyExistsException.class, ()-> bookService.registerNewBook(bookToRegister));
+
+    }
+    @Test
+    @DisplayName("When adding a book with not unique ISBN, should be correct")
+    void when_addingABookWithNoUniqueISBN_shouldBeCorrect() {
+        //given
+        BookDto bookToRegister = new BookDto("999", "The Hobbit", new Author("Piet", "Hein"));
+        //when
+        bookService.registerNewBook(bookToRegister);
+        Throwable throwAnException = catchThrowable(()-> bookService.registerNewBook(bookToRegister));
+        //then
+        Assertions.assertEquals("Book can't be registered ISBN already exists in database",throwAnException.getMessage());
+
+    }
+
 }
