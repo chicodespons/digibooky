@@ -34,7 +34,7 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
-    //Get book by isbn   http://localhost:8080/books/getbooksbyisbn
+    //Get book by isbn   http://localhost:8080/books/getbooksbyisbn?search=123456
     @GetMapping(path = "/getbookbyisbn")
     @ResponseStatus(HttpStatus.OK)
     public List<BookSummaryDto> getBookByISBN(@RequestHeader String authorization, @RequestParam(required = false) String search) {
@@ -70,5 +70,22 @@ public class BookController {
     public List<BookSummaryDto> getBookByAuthor(@RequestHeader String authorization, @RequestParam(required = false) String search) {
         securityService.validateAuthorization(authorization, Feature.GET_BOOK_BY_AUTHOR);
         return bookService.getBookByAuthor(search);
+    }
+
+    @DeleteMapping(path= "/deletebook/{isbn}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookDto> deleteBookByISBN(@RequestHeader String authorization, @PathVariable String isbn){
+        securityService.validateAuthorization(authorization, Feature.DELETE_BOOK);
+        bookService.deleteBookByIsbn(isbn);
+        return bookService.getAllBooks();
+    }
+
+    //Undelete option, using delete call to make book unhidden
+    @DeleteMapping(path= "/undeletebook/{isbn}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookDto> unDeleteBookByISBN(@RequestHeader String authorization, @PathVariable String isbn){
+        securityService.validateAuthorization(authorization, Feature.DELETE_BOOK);
+        bookService.unDeleteBookByIsbn(isbn);
+        return bookService.getAllBooks();
     }
 }

@@ -9,11 +9,14 @@ import com.switchfully.digibooky.exceptions.InvalidRoleException;
 import com.switchfully.digibooky.mapper.MemberMapper;
 import com.switchfully.digibooky.mapper.UserMapper;
 import com.switchfully.digibooky.dto.CreateMemberDto;
+import com.switchfully.digibooky.models.Member;
 import com.switchfully.digibooky.models.Role;
 import com.switchfully.digibooky.repository.UserRepository;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -85,7 +88,8 @@ class UserServiceTest {
 
     @Test
     void creatingMemberWithValidData_ShouldReturn_NewlyCreatedMember() throws InssAlreadyExistsException, InvalidEmailAddressException {
-        CreateMemberDto member = new CreateMemberDto("a", "123ajja", "Deketelaere", "Loïc", "loic@thisEmailShoujk;l;ldOnlyBeUsedForTests.com", "Stationstraat",  10, 1000, "Brussel");
+
+        CreateMemberDto member = new CreateMemberDto("a", "123a45949459a", "Deketelaere", "Loïc", "loic@thisEmailShoujk;l;ldOnlyBeUsedForTests.com", "Stationstraat", 10, 1000, "Brussel");
 
         MemberDto createdMember = userService.createNewMember(member);
 
@@ -116,4 +120,21 @@ class UserServiceTest {
     }
 
 
+
+    @Test
+    @DisplayName("When calling all members as an admin, we should get a list that contains all member")
+    void whenCallingAllMemberAsAdmin_listWithAllMemberShouldBeGiven() {
+        UserRepository userRepository = new UserRepository();
+        MemberMapper memberMapper = new MemberMapper();
+        UserMapper userMapper = new UserMapper();
+        UserService userService = new UserService(userRepository, memberMapper, userMapper);
+
+        //given
+        Member memberOne = new Member("badPassword", "Boeckstaens", "Sven", "sven@mail.com", "123.549.465", "Nieuwbaan", 45, 1501, "Ternat");
+        userRepository.addMember(memberOne.getEmail(), memberOne);
+        //when
+        List<MemberDto> memberDtoList = userService.getAllMembers();
+        //
+        Assertions.assertTrue(memberDtoList.contains(memberMapper.toDto(memberOne)));
+    }
 }

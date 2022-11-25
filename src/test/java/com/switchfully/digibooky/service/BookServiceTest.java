@@ -136,7 +136,7 @@ class BookServiceTest {
     @DisplayName("When adding a book with unique ISBN book should present in repository")
     void when_addingNewBook_shouldBeAlsoPresent_inRepository() {
         //given
-        BookDto bookToRegister = new BookDto("32565858477445874587", "The Hobbit", new Author("Piet", "Hein"));
+        BookDto bookToRegister = new BookDto("999", "The Hobbit", new Author("Piet", "Hein"));
         Book bookInRepository = new Book(bookToRegister.getISBN(), bookToRegister.getTitle(), bookToRegister.getAuthor());
         //when
         bookService.registerNewBook(bookToRegister);
@@ -148,7 +148,7 @@ class BookServiceTest {
     @DisplayName("When adding a book with not unique ISBN, should throw exception")
     void when_addingABookWithNoUniqueISBN_shouldThrowException() {
         //given
-        BookDto bookToRegister = new BookDto("87548754875487548754", "The Hobbit", new Author("Piet", "Hein"));
+        BookDto bookToRegister = new BookDto("956161891651", "The Hobbit", new Author("Piet", "Hein"));
         //when
         bookService.registerNewBook(bookToRegister);
         //then
@@ -159,7 +159,7 @@ class BookServiceTest {
     @DisplayName("When adding a book with not unique ISBN, should be correct")
     void when_addingABookWithNoUniqueISBN_shouldBeCorrect() {
         //given
-        BookDto bookToRegister = new BookDto("1236598547584874555555", "The Hobbit", new Author("Piet", "Hein"));
+        BookDto bookToRegister = new BookDto("78945615191", "The Hobbit", new Author("Piet", "Hein"));
         //when
         bookService.registerNewBook(bookToRegister);
         Throwable throwAnException = catchThrowable(()-> bookService.registerNewBook(bookToRegister));
@@ -168,4 +168,46 @@ class BookServiceTest {
 
     }
 
+
+    @Test
+    @DisplayName("When soft deleting a book, book should be hidden and still in book repository")
+    void whenSoftDeletingABook_bookShouldBeHidden_butStillInRepository(){
+        //given
+        Book bookInRepository = new Book("124444451915951951944","Ramon",new Author("lola", "lolita"),"Magic and goblet to catch", false);
+        bookRepository.addBook(bookInRepository);
+        //when
+        bookService.deleteBookByIsbn(bookInRepository.getISBN());
+        //then
+        assertTrue(bookInRepository.isHidden());
+        Assertions.assertTrue(bookRepository.getBookList().contains(bookInRepository));
+    }
+    @Test
+    @DisplayName("When soft deleting a book by an Isbn that is not valid, should throw exception")
+    void whenSoftDeletingAbookWithUnknownISBN_exceptionShouldBeThrown(){
+        //then
+        Assertions.assertThrows(BookByISBNNotFoundException.class,()-> bookService.deleteBookByIsbn("This is not a good isbn"));
+    }
+    @Test
+    @DisplayName("When undeleting a book, it should be no longer hidden")
+    void whenUndeletingADeleteBook_itShouldNoLongerBeHidden_andShowUpInTheBookDTOList(){
+        //given
+        Book bookInRepository = new Book("124444444","Ramon",new Author("lola", "lolita"),"Magic and goblet to catch", false);
+        bookRepository.addBook(bookInRepository);
+        bookService.deleteBookByIsbn(bookInRepository.getISBN());
+        //when
+        bookService.unDeleteBookByIsbn(bookInRepository.getISBN());
+        //then
+        assertFalse(bookInRepository.isHidden());
+    }
+
+    @Test
+    @DisplayName("Testing method get all books, should not return hidden books")
+    void checkingThatGetAllBooks_doesNotreturnsHiddenBooks() {
+        //given
+        Book bookOne = new Book("this a test isbn: 159489","Test Book",new Author("Sven","Boeck"),"This book is so weird", true);
+        //when
+        bookRepository.addBook(bookOne);
+        //then
+        Assertions.assertFalse(bookService.getAllBooks().contains(bookMapper.toDto(bookOne)));
+    }
 }

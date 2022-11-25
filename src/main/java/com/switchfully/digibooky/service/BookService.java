@@ -30,7 +30,10 @@ public class BookService {
     }
 
     public List<BookDto> getAllBooks() {
-        return bookMapper.toDto(bookRepository.getBookList());
+        return bookMapper.toDto(bookRepository.getBookList()
+                .stream()
+                .filter(book -> book.isHidden()==false)
+                .toList());
     }
 
     public List<BookSummaryDto> getBookByISBN(String ISBN) {
@@ -115,5 +118,21 @@ public class BookService {
         Book bookToRegister = new Book(book.getISBN(), book.getTitle(), book.getAuthor());
         bookRepository.addBook(bookToRegister);
         return bookToRegister;
+    }
+
+    public void deleteBookByIsbn(String isbn) {
+        Book foundBook = bookRepository.getBookList().stream()
+                .filter(book -> book.getISBN().equals(isbn))
+                .findFirst()
+                .orElseThrow(()-> new BookByISBNNotFoundException("No book found for given ISBN"));
+        foundBook.setHidden(true);
+    }
+
+    public void unDeleteBookByIsbn(String isbn) {
+        Book foundBook = bookRepository.getBookList().stream()
+                .filter(book -> book.getISBN().equals(isbn))
+                .findFirst()
+                .orElseThrow(()-> new BookByISBNNotFoundException("No book found for given ISBN"));
+        foundBook.setHidden(false);
     }
 }

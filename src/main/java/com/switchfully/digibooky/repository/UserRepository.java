@@ -66,4 +66,8 @@ public class UserRepository {
         users.addAll(userMap.values());
         return users;
     }
+
+    public void addMember(String userEmail, Member member){
+        userMap.put(userEmail,member);
+    }
 }

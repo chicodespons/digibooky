@@ -10,5 +10,6 @@ public enum Feature {
     UPDATE_BOOK,
     GET_BOOK_BY_TITLE,
     REGISTER_BOOK,
-    GET_BOOK_BY_AUTHOR;
+    GET_BOOK_BY_AUTHOR,
+    DELETE_BOOK ;
 }
