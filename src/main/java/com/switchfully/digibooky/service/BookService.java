@@ -41,9 +41,9 @@ public class BookService {
         List<Book> booksFound = bookList.stream().filter(b -> RegexProvider.isContain(b.getISBN(), ISBN)).toList();
         if (!booksFound.isEmpty()) {
             return bookMapper.toBookSummaryDto(booksFound);
-        } else
+        } else {
             throw new BookByISBNNotFoundException("Book not found for given ISBN");
-
+        }
     }
 
     public List<BookSummaryDto> getBookByTitle(String title) {

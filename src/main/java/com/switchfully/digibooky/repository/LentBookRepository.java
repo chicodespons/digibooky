@@ -40,4 +40,9 @@ public class LentBookRepository {
     public void removeLending(String lendingID) {
         lentBookList.remove(lendingID);
     }
+
+    public LentBook lendBook(LentBook lentBook) {
+        lentBookList.put(lentBook.getLendingID(), lentBook);
+        return lentBookList.get(lentBook.getLendingID());
+    }
 }
