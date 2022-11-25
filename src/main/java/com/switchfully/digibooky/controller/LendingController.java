@@ -30,11 +30,11 @@ public class LendingController {
     }
 
     //Return a book
-    @PostMapping(path = "/returnbook", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/returnbook/{leningId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public BookDto returnBook(@RequestHeader String authorization, @RequestBody String lendingID) {
+    public BookDto returnBook(@RequestHeader String authorization, @PathVariable String leningId) {
         securityService.validateAuthorization(authorization, Feature.RETURN_BOOK);
-        return lendingService.ReturnBook(lendingID);
+        return lendingService.returnBook(leningId);
     }
 
 //    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

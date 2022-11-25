@@ -1,7 +1,9 @@
 package com.switchfully.digibooky.service;
 
 import com.switchfully.digibooky.dto.BookDto;
+import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
 import com.switchfully.digibooky.mapper.BookMapper;
+import com.switchfully.digibooky.models.Book;
 import com.switchfully.digibooky.models.LentBook;
 import com.switchfully.digibooky.repository.LentBookRepository;
 import org.springframework.stereotype.Service;
@@ -22,10 +24,15 @@ public class LendingService {
         return lentBookRepository.getAllBooks();
     }
 
-    public BookDto ReturnBook(String lendingID) {
-
-
+    public BookDto returnBook(String lendingID) {
+        LentBook lentBook = lentBookRepository.getLendingBookById(lendingID);
+        Book book = lentBook.getBook();
+        book.setHidden(false);
+        lentBookRepository.removeLending(lendingID);
+        return bookMapper.toDto(book);
     }
+
+
 
 //    public LentBook lendBook(String userId, String bookIsbn) {
 //        return lentBookRepository.lendBook();
