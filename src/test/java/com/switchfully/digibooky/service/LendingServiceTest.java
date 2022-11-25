@@ -43,6 +43,9 @@ class LendingServiceTest {
     @Autowired
     private LentBookMapper lentBookMapper;
 
+     @Autowired
+     private UserRepository userRepository;
+
 //    @Test
 //    void LendingBookWithWrongLogin_ShouldReturn_IncorrectLogInInformationException() {
 //        String authorization = new String(Base64.getEncoder().encode("loic@email.com:a"));
@@ -53,23 +56,28 @@ class LendingServiceTest {
 //    }
 
 
+    @Test
+    @DisplayName("If lentBook is returned, it should be removed form LentBookRepository")
+    void whenLendingBook_isReturned_itShouldBeRemoved_fromLendingRepository() {
+        //give
+        Book book = new Book("LendingBookTest1", "Title", new Author("Kwak", "Kwek"));
+        bookRepository.addBook(book);
+        User testUser = new User("azerty", "Bloem", "Karel", "sven2@mail.be", Role.MEMBER);
+        userRepository.addUser(testUser);
+        LentBook lentBook = new LentBook(book,testUser);
 
-//@Test
-//@DisplayName("If lentBook is returned, it should be removed form LentBookRepository")
-//void whenLendingBook_isReturned_itShouldBeRemoved_fromLendingRepository() {
-//  //give
-//  Book book = new Book("LendingBookTest1", "Title", new Author("Kwak", "Kwek"));
-//  bookRepository.addBook(book);
-//  LentBook lentBook = new LentBook(book,
-//          new User("hablakojd,o", "Bloem", "Karel", "bloemen@ggmail.be", Role.MEMBER));
-//  //when
-//  lentBookRepository.addLentBook(lentBook);
-//  lendingService.returnBook(lentBook.getLendingID());
-//  //then
-//  Assertions.assertFalse(lentBookRepository.getAllBooks().contains(lentBook));
-//  Assertions.assertFalse(book.isHidden());
-//
-//}
+        String correctInput = "sven2@mail.be:azerty";
+        byte[] inputEncoded = Base64.getEncoder().encode(correctInput.getBytes());
+        String authorizationString = "Basic " + new String(inputEncoded);
+
+        //when
+        lentBookRepository.addLentBook(lentBook);
+        lendingService.returnBook(lentBook.getLendingID(), authorizationString);
+        //then
+        Assertions.assertFalse(lentBookRepository.getAllBooks().contains(lentBook));
+        Assertions.assertFalse(book.isHidden());
+
+    }
 
 //@Test:
 //@DisplayName()

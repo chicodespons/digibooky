@@ -50,6 +50,9 @@ public class LendingService {
         if (!lentBook.getUser().getUserId().equals(userId)) {
             throw new IncorrectLogInInformationException();
         }
+        if(lentBook.getDueDate().isBefore(LocalDate.now())){
+            throw new IllegalArgumentException("Book is returned too late, pay up now!!!");
+        }
         Book book = lentBook.getBook();
         book.setHidden(false);
         lentBookRepository.removeLending(lendingID);
