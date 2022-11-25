@@ -23,9 +23,9 @@ public class LendingController {
         return lendingService.getAllLentBooks();
     }
 
-//    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//    @PostMapping(path = "{nookIsbn}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 //    @ResponseStatus(HttpStatus.OK)
-//    public LentBook lendBook(@RequestBody String userId, String bookIsbn) {
-//        return lendingService.lendBook(userId, bookIsbn);
+//    public LentBook lendBook(@RequestHeader String authorization, @PathVariable String bookIsbn) {
+//        return lendingService.lendBook(authorization, bookIsbn);
 //    }
 }
