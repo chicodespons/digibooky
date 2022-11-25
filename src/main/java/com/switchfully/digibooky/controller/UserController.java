@@ -31,13 +31,6 @@ public class UserController {
         this.securityService = securityService;
     }
 
-    // methode mag weg denk ik
-    @GetMapping(path = "/all")
-    @ResponseStatus(HttpStatus.OK)
-    public List<UserDto> getAll() {
-        return userService.getAllUsers();
-    }
-
     //Get all members   http://localhost:8080/users
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
