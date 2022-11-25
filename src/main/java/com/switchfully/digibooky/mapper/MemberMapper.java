@@ -11,7 +11,7 @@ import java.util.List;
 @Component
 public class MemberMapper {
     public MemberDto toDto(Member member) {
-        return new MemberDto(member.getPassword(), member.getLastname(), member.getFirstname(),
+        return new MemberDto(member.getLastname(), member.getFirstname(),
                 member.getEmail(), member.getStreetname(), member.getStreetNumber(),
                 member.getPostcode(), member.getCity());
     }
