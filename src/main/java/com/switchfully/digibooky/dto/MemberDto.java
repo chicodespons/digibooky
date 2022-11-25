@@ -11,8 +11,6 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class MemberDto {
-
-    private  String password;
     private  String lastname;
     private  String firstname;
     private  String email;
@@ -21,8 +19,7 @@ public class MemberDto {
     private int postcode;
     private String city;
 
-    public MemberDto(String password, String lastname, String firstname, String email, String streetname, int streetNumber, int postcode, String city) {
-        this.password = password;
+    public MemberDto(String lastname, String firstname, String email, String streetname, int streetNumber, int postcode, String city) {
         this.lastname = lastname;
         this.firstname = firstname;
         this.email = email;

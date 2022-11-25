@@ -2,7 +2,9 @@ package com.switchfully.digibooky.controller;
 
 
 import com.switchfully.digibooky.exceptions.*;
+
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -38,12 +40,22 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(UserCreationException.class)
-    protected void userValidationException(UserCreationException ex, HttpServletResponse response) throws IOException{
+    protected void userValidationException(UserCreationException ex, HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
     }
 
     @ExceptionHandler(InvalidRoleException.class)
-    protected void invalidRoleException(InvalidRoleException ex, HttpServletResponse response) throws IOException{
+    protected void invalidRoleException(InvalidRoleException ex, HttpServletResponse response) throws IOException {
+        response.sendError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+    }
+
+    @ExceptionHandler(IncorrectLogInInformationException.class)
+    protected void incorrectLogInInformation(IncorrectLogInInformationException ex, HttpServletResponse response) throws IOException {
+        response.sendError(HttpStatus.FORBIDDEN.value(), ex.getMessage());
+    }
+
+    @ExceptionHandler(BookNotAvailableException.class)
+    protected void bookNotAvailableException(BookNotAvailableException ex, HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
     }
 }

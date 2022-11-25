@@ -3,7 +3,6 @@ package com.switchfully.digibooky.controller;
 import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.dto.BookSummaryDto;
 import com.switchfully.digibooky.dto.BookToUpdateToDto;
-import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.models.Book;
 import com.switchfully.digibooky.models.Feature;
 import com.switchfully.digibooky.security.SecurityService;
@@ -34,18 +33,18 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
-    //Get book by isbn   http://localhost:8080/books/getbooksbyisbn?search=123456
+    //Get book by isbn   http://localhost:8080/books/getbooksbyisbn
     @GetMapping(path = "/getbookbyisbn")
     @ResponseStatus(HttpStatus.OK)
     public List<BookSummaryDto> getBookByISBN(@RequestHeader String authorization, @RequestParam(required = false) String search) {
         securityService.validateAuthorization(authorization, Feature.GET_BOOK_BY_ISBN);
-         return bookService.getBookByISBN(search);
+        return bookService.getBookByISBN(search);
     }
 
     //Update book     http://localhost:8080/books/updatebook/{isbn}
     @PutMapping(value = "/updatebook/{isbn}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public BookDto updateProfessor(@RequestBody BookToUpdateToDto book, @PathVariable String isbn, @RequestHeader String authorization) {
+    public BookDto updateBook(@RequestBody BookToUpdateToDto book, @PathVariable String isbn, @RequestHeader String authorization) {
         securityService.validateAuthorization(authorization, Feature.UPDATE_BOOK);
         return bookService.updateBook(book, isbn);
     }
@@ -58,6 +57,7 @@ public class BookController {
         return bookService.registerNewBook(book);
     }
 
+    //Get book by title   http://localhost:8080/books/getbooksbytitle?search=titleToLookFor
     @GetMapping(path = "/getbookbytitle")
     @ResponseStatus(HttpStatus.OK)
     public List<BookSummaryDto> getBookByTitle(@RequestHeader String authorization, @RequestParam(required = false) String search) {
@@ -65,6 +65,7 @@ public class BookController {
         return bookService.getBookByTitle(search);
     }
 
+    //Get book by author   http://localhost:8080/books/getbooksbytitle?search=authorToLookFor
     @GetMapping(path = "/getbookbyauthor")
     @ResponseStatus(HttpStatus.OK)
     public List<BookSummaryDto> getBookByAuthor(@RequestHeader String authorization, @RequestParam(required = false) String search) {
@@ -72,20 +73,28 @@ public class BookController {
         return bookService.getBookByAuthor(search);
     }
 
-    @DeleteMapping(path= "/deletebook/{isbn}")
+    //Delete book by isbn   http://localhost:8080/books/deletebook/{isbn}
+    @DeleteMapping(path = "/deletebook/{isbn}")
     @ResponseStatus(HttpStatus.OK)
-    public List<BookDto> deleteBookByISBN(@RequestHeader String authorization, @PathVariable String isbn){
+    public List<BookDto> deleteBookByISBN(@RequestHeader String authorization, @PathVariable String isbn) {
         securityService.validateAuthorization(authorization, Feature.DELETE_BOOK);
         bookService.deleteBookByIsbn(isbn);
         return bookService.getAllBooks();
     }
 
-    //Undelete option, using delete call to make book unhidden
-    @DeleteMapping(path= "/undeletebook/{isbn}")
+    //UnDelete book by isbn   http://localhost:8080/books/undeletebook/{isbn}
+    @DeleteMapping(path = "/undeletebook/{isbn}")
     @ResponseStatus(HttpStatus.OK)
-    public List<BookDto> unDeleteBookByISBN(@RequestHeader String authorization, @PathVariable String isbn){
+    public List<BookDto> unDeleteBookByISBN(@RequestHeader String authorization, @PathVariable String isbn) {
         securityService.validateAuthorization(authorization, Feature.DELETE_BOOK);
         bookService.unDeleteBookByIsbn(isbn);
         return bookService.getAllBooks();
     }
+
+
+
+    // Borrow a book
+//    @GetMapping(path = "/borrowbook")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<BookDto> getBookBy
 }

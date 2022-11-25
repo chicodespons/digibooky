@@ -25,6 +25,6 @@ public class LentBook {
     }
 
     private void setDueDate() {
-        dueDate = LocalDate.now();
+        dueDate = LocalDate.now().plusDays(21);
     }
 }

@@ -131,7 +131,7 @@ class UserServiceTest {
 
         //given
         Member memberOne = new Member("badPassword", "Boeckstaens", "Sven", "sven@mail.com", "123.549.465", "Nieuwbaan", 45, 1501, "Ternat");
-        userRepository.addMember(memberOne.getEmail(), memberOne);
+        userRepository.addMember(memberOne);
         //when
         List<MemberDto> memberDtoList = userService.getAllMembers();
         //

@@ -4,6 +4,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,17 +13,17 @@ import lombok.Setter;
 public class CreateMemberDto {
     @NotNull
     @NotEmpty
-    private  String password;
+    private String password;
     @NotNull
     @NotEmpty
-    private  String inss;
+    private String inss;
     @NotNull
     @NotEmpty
-    private  String lastname;
-    private  String firstname;
+    private String lastname;
+    private String firstname;
     @NotNull
     @NotEmpty
-    private  String email;
+    private String email;
     private String streetname;
     private int streetNumber;
     @NotNull

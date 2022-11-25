@@ -5,10 +5,7 @@ import com.switchfully.digibooky.models.Role;
 import com.switchfully.digibooky.models.User;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class UserRepository {
@@ -20,6 +17,12 @@ public class UserRepository {
 
     public User getUser(String email) {
         return userMap.get(email);
+    }
+
+    public Optional<User> getUserById(String userId) {
+        return userMap.values().stream()
+                .filter(user -> user.getUserId().equals(userId))
+                .findFirst();
     }
 
     public List<Member> getAllMembers() {
@@ -67,7 +70,11 @@ public class UserRepository {
         return users;
     }
 
-    public void addMember(String userEmail, Member member){
-        userMap.put(userEmail,member);
+    public void addMember(Member member) {
+        userMap.put(member.getEmail(), member);
+    }
+
+    public void addUser(User user) {
+        userMap.put(user.getEmail(), user);
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Component
 public class UserMapper {
     public UserDto toDto(User user) {
-        return new UserDto(user.getPassword(), user.getLastname(), user.getFirstname(),
+        return new UserDto(user.getLastname(), user.getFirstname(),
                 user.getEmail(), user.getRole());
     }
 
@@ -24,9 +24,5 @@ public class UserMapper {
     public User createToUser(CreateUserDto createUserDto) {
         return new User(createUserDto.getPassword(), createUserDto.getLastname(), createUserDto.getFirstname(),
                 createUserDto.getEmail(), createUserDto.getRole());
-    }
-
-    public User toUser(UserDto userDto) {
-        return new User(userDto.getPassword(), userDto.getLastname(), userDto.getFirstname(), userDto.getEmail(), userDto.getRole());
     }
 }
