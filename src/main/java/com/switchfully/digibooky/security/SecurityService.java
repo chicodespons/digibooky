@@ -51,6 +51,9 @@ public class SecurityService {
     public String getUserIdByAuthorizationString(String authorization) {
         EmailPassword emailPassword = getEmailPassword(authorization);
         User user = userRepository.getUser(emailPassword.getEmail());
+        if (!doesPasswordMatch(user, emailPassword.getPassword())) {
+            throw new IncorrectLogInInformationException();
+        }
         return user.getUserId();
     }
 }

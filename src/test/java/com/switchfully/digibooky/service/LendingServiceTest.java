@@ -1,9 +1,8 @@
 package com.switchfully.digibooky.service;
 
 import com.switchfully.digibooky.dto.CreateMemberDto;
+import com.switchfully.digibooky.exceptions.*;
 import com.switchfully.digibooky.exceptions.IncorrectLogInInformationException;
-import com.switchfully.digibooky.exceptions.IncorrectLogInInformationException;
-import com.switchfully.digibooky.exceptions.InvalidEmailAddressException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.switchfully.digibooky.models.*;
@@ -58,20 +57,32 @@ class LendingServiceTest {
     }
 
     @Test
-    void LendingBookWithWrongISB_ShouldReturn_BookByISBNNotFoundException() {
+    void LendingBookWithWrongISBN_ShouldReturn_BookByISBNNotFoundException() {
         String primitiveAuthorization = new String(Base64.getEncoder().encode(("loic@email.com:a").getBytes()));
         String authorization = "Basic " + primitiveAuthorization;
 
-        assertThrows(IncorrectLogInInformationException.class, () -> {lendingService.lendBook(authorization, "1");});
+        assertThrows(BookByISBNNotFoundException.class, () -> {lendingService.lendBook(authorization, "1");});
     }
 
-//    @Test
-//    void LendingBookWithWrongISB_ShouldReturn_BookByISBNNotFoundException() {
-//        String primitiveAuthorization = new String(Base64.getEncoder().encode(("loic@email.com:a").getBytes()));
-//        String authorization = "Basic " + primitiveAuthorization;
-//
-//        assertThrows(IncorrectLogInInformationException.class, () -> {lendingService.lendBook(authorization, "1");});
-//    }
+    @Test
+    void LendingBookWhichIsHidden_ShouldReturn_BookNotAvailableException() throws BookNotAvailableException {
+        String primitiveAuthorization = new String(Base64.getEncoder().encode(("loic@email.com:a").getBytes()));
+        String authorization = "Basic " + primitiveAuthorization;
+        Book book = bookRepository.getBookList().get(0);
+
+        assertThrows(BookNotAvailableException.class, () -> {lendingService.lendBook(authorization, book.getISBN());});
+    }
+
+    @Test
+    void LendingBookWithValidData_ShouldWork() throws BookNotAvailableException {
+        String primitiveAuthorization = new String(Base64.getEncoder().encode(("loic@email.com:a").getBytes()));
+        String authorization = "Basic " + primitiveAuthorization;
+        Book book = bookRepository.getBookList().get(1);
+
+        LentBook lentBook = lendingService.lendBook(authorization, book.getISBN());
+
+        assertEquals(lentBook.getBook().getISBN(), book.getISBN());
+    }
 
 
     @Test
