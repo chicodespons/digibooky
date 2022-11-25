@@ -8,7 +8,9 @@ import com.switchfully.digibooky.exceptions.InssAlreadyExistsException;
 import com.switchfully.digibooky.exceptions.InvalidEmailAddressException;
 import com.switchfully.digibooky.dto.UserDto;
 import com.switchfully.digibooky.service.UserService;
+
 import javax.validation.Valid;
+
 import org.springframework.http.MediaType;
 import com.switchfully.digibooky.models.Feature;
 import com.switchfully.digibooky.security.SecurityService;
@@ -29,12 +31,14 @@ public class UserController {
         this.securityService = securityService;
     }
 
+    // methode mag weg denk ik
     @GetMapping(path = "/all")
     @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getAll() {
         return userService.getAllUsers();
     }
 
+    //Get all members   http://localhost:8080/users
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<MemberDto> getAllMembers(@RequestHeader String authorization) {
@@ -42,6 +46,7 @@ public class UserController {
         return userService.getAllMembers();
     }
 
+    //Register a new members   http://localhost:8080/users/new/member
     @PostMapping(path = "/new/member", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public MemberDto registerNewMember(@Valid @RequestBody CreateMemberDto createMemberDto, BindingResult errors) throws InssAlreadyExistsException, InvalidEmailAddressException, UserCreationException {
@@ -51,10 +56,11 @@ public class UserController {
         return userService.createNewMember(createMemberDto);
     }
 
+    //Register a new user   http://localhost:8080/users/new
     @PostMapping(path = "/new", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public UserDto registerNewUser(@Valid @RequestBody CreateUserDto createUserDto,
-                                        @RequestHeader String authorization, BindingResult errors) throws UserCreationException, InvalidEmailAddressException {
+                                   @RequestHeader String authorization, BindingResult errors) throws UserCreationException, InvalidEmailAddressException {
         if (errors.hasErrors()) {
             throw new UserCreationException();
         }
