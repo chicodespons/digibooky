@@ -11,7 +11,6 @@ import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.models.Book;
 import com.switchfully.digibooky.repository.BookRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

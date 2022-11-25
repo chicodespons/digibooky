@@ -3,6 +3,7 @@ package com.switchfully.digibooky.mapper;
 import com.switchfully.digibooky.dto.BookDto;
 import com.switchfully.digibooky.dto.BookSummaryDto;
 import com.switchfully.digibooky.models.Book;
+import com.switchfully.digibooky.models.LentBook;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -25,7 +26,6 @@ public class BookMapper {
     }
 
     public BookSummaryDto toBookSummaryDto(Book book) {
-
         return new BookSummaryDto(book.getISBN(), book.getTitle(), book.getAuthor(), book.getSummary());
     }
 
@@ -33,5 +33,9 @@ public class BookMapper {
         return bookCollection.stream()
                 .map(this::toBookSummaryDto)
                 .toList();
+    }
+
+    public LentBook toLentBook(Book book) {
+        return new LentBook(book);
     }
 }

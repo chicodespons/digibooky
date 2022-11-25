@@ -2,7 +2,7 @@ package com.switchfully.digibooky.controller;
 
 
 import com.switchfully.digibooky.exceptions.*;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

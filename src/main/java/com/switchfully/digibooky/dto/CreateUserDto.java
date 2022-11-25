@@ -2,8 +2,8 @@ package com.switchfully.digibooky.dto;
 
 import com.switchfully.digibooky.exceptions.InvalidRoleException;
 import com.switchfully.digibooky.models.Role;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter

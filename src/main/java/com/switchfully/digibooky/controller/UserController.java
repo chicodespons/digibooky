@@ -8,7 +8,7 @@ import com.switchfully.digibooky.exceptions.InssAlreadyExistsException;
 import com.switchfully.digibooky.exceptions.InvalidEmailAddressException;
 import com.switchfully.digibooky.dto.UserDto;
 import com.switchfully.digibooky.service.UserService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.http.MediaType;
 import com.switchfully.digibooky.models.Feature;
 import com.switchfully.digibooky.security.SecurityService;
