@@ -33,6 +33,15 @@ class LendingServiceTest {
      @Autowired
      private UserRepository userRepository;
 
+//    @Test
+//    @DisplayName("Test when member email given, return all books lent by this member")
+//    void getAllLentBooksByMember_whenGivenEmailMember_returnAllBooksLentByMember(){
+//        String email = "member@email.com";
+//
+//        Assertions.assertEquals(lentBookMapper.lentBookListToDTO(lentBookRepository.getLentBookList().values().stream().toList()), lendingService.getAllLentBooksByMember(email));
+//
+//    }
+
     @Test
     void LendingBookWithWrongLogin_ShouldReturn_IncorrectLogInInformationException() {
         String primitiveAuthorization = new String(Base64.getEncoder().encode(("loic@email.com:WRONGPASSWORD").getBytes()));
@@ -69,6 +78,7 @@ class LendingServiceTest {
 
         assertEquals(lentBook.getBook().getISBN(), book.getISBN());
     }
+
 
 
     @Test
@@ -124,14 +134,7 @@ class LendingServiceTest {
 //    }
 
 
-    @Test
-    @DisplayName("Test when member email given, return all books lent by this member")
-    void getAllLentBooksByMember_whenGivenEmailMember_returnAllBooksLentByMember(){
-        String email = "loic@email.com";
 
-        Assertions.assertEquals(lentBookMapper.lentBookListToDTO(lentBookRepository.getLentBookList().values().stream().toList()), lendingService.getAllLentBooksByMember(email));
-
-    }
 
 //    @Test
 //    @DisplayName("Test get alloverdue books")
