@@ -11,6 +11,7 @@ import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.models.Author;
 import com.switchfully.digibooky.models.Book;
 import com.switchfully.digibooky.providers.RegexProvider;
+import com.switchfully.digibooky.repository.AuthorRepository;
 import com.switchfully.digibooky.repository.BookRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +23,12 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
+    private final AuthorRepository authorRepository;
 
-    public BookService(BookRepository bookRepository, BookMapper bookMapper) {
+    public BookService(BookRepository bookRepository, BookMapper bookMapper, AuthorRepository authorRepository) {
         this.bookRepository = bookRepository;
         this.bookMapper = bookMapper;
+        this.authorRepository = authorRepository;
     }
 
     public List<BookDto> getAllBooks() {
@@ -114,6 +117,12 @@ public class BookService {
                 throw new IsbnAlreadyExistsException("Book can't be registered ISBN already exists in database");
             }
         }
+
+        List<Author> authorList = authorRepository.getAuthorList();
+        if (!authorList.contains(book.getAuthor())) {
+            authorRepository.addAuthor(book.getAuthor());
+        }
+
         Book bookToRegister = new Book(book.getISBN(), book.getTitle(), book.getAuthor());
         bookRepository.addBook(bookToRegister);
         return bookToRegister;

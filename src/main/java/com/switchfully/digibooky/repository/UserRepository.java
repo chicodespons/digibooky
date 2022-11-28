@@ -57,11 +57,16 @@ public class UserRepository {
         User member = new Member("a", "Deketelaer", "Loïc", "loic@email.com", "89.12-5", "Stationstraat", 10, 1000, "Brussel");
         User admin = new User("b", "De Beste", "Pieter", "pieter@mail.be", Role.ADMIN);
         User librarian = new User("azerty", "Boeckstaens", "Sven", "sven@mail.be", Role.LIBRARIAN);
-        User testmember = new Member("testMember", "TestMember", "TestMember", "testMember@mail.com", "89.12-5", "Stationstraat", 10, 1000, "Brussel");
+        User memberForDemo = new Member("a", "Member", "Demo", "member@email.com", "1111", "memberstreet", 2, 1000, "MemberCity");
+        User adminDemo = new User("a", "Admin", "Demo", "admin@email.com", Role.ADMIN);
+        User librarianDemo = new User("a", "Librarian", "Demo", "librarian@email.com", Role.LIBRARIAN);
+
         userMap.put(member.getEmail(), member);
         userMap.put(admin.getEmail(), admin);
         userMap.put(librarian.getEmail(), librarian);
-        userMap.put(testmember.getEmail(), testmember);
+        userMap.put(memberForDemo.getEmail(), memberForDemo);
+        userMap.put(adminDemo.getEmail(), adminDemo);
+        userMap.put(librarianDemo.getEmail(), librarianDemo);
     }
 
     public List<User> getAllUsers() {

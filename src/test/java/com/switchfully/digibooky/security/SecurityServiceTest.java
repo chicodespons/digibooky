@@ -84,7 +84,7 @@ class SecurityServiceTest {
         @DisplayName("Testing validation to throw correct error message when User has no access to Feature")
         void givenAMember_whenaccesssingFeatureThatIsNotAllowed_thenErrorMessageShouldBeThrown() {
             //given
-            String correctMember = "testMember@mail.com:testMember";
+            String correctMember = "member@email.com:a";
             byte[] inputEncoded = Base64.getEncoder().encode(correctMember.getBytes());
             String authorizationString = "Basic " + new String(inputEncoded);
             //

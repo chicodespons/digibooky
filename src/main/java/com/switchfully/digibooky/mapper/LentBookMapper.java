@@ -11,7 +11,7 @@ import java.util.List;
 public class LentBookMapper {
 
     public LentBookDto lentBookToDTO(LentBook lentBook){
-        return new LentBookDto(lentBook.getBook(),lentBook.getLendingID(),lentBook.getDueDate());
+        return new LentBookDto(lentBook.getBook(),lentBook.getLendingID(),lentBook.getDueDate(), lentBook.getUser().getEmail());
     }
 
     public List<LentBookDto> lentBookListToDTO(List<LentBook> lentBookList){

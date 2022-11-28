@@ -27,7 +27,8 @@ public class LendingController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public List<LentBook> getAllLentBooks() {
+    public List<LentBookDto> getAllLentBooks(@RequestHeader String authorization) {
+        securityService.validateAuthorization(authorization, Feature.GET_ALL_LENT_BOOK_BY_MEMBER);
         return lendingService.getAllLentBooks();
     }
 
@@ -41,7 +42,7 @@ public class LendingController {
 
     @PostMapping(path = "{bookIsbn}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public LentBook lendBook(@RequestHeader String authorization, @PathVariable String bookIsbn) throws BookNotAvailableException {
+    public LentBookDto lendBook(@RequestHeader String authorization, @PathVariable String bookIsbn) throws BookNotAvailableException {
         securityService.validateAuthorization(authorization, Feature.LEND_BOOK);
         return lendingService.lendBook(authorization, bookIsbn);
     }

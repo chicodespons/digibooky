@@ -5,6 +5,7 @@ import com.switchfully.digibooky.dto.LentBookDto;
 import com.switchfully.digibooky.dto.LentBookOverdueDto;
 import com.switchfully.digibooky.exceptions.BookByISBNNotFoundException;
 import com.switchfully.digibooky.exceptions.BookNotAvailableException;
+import com.switchfully.digibooky.exceptions.BookOverdueException;
 import com.switchfully.digibooky.exceptions.IncorrectLogInInformationException;
 import com.switchfully.digibooky.mapper.BookMapper;
 import com.switchfully.digibooky.mapper.LentBookMapper;
@@ -40,8 +41,8 @@ public class LendingService {
         this.lentBookMapper = lentBookMapper;
     }
 
-    public List<LentBook> getAllLentBooks() {
-        return lentBookRepository.getAllBooks();
+    public List<LentBookDto> getAllLentBooks() {
+        return lentBookMapper.lentBookListToDTO(lentBookRepository.getAllBooks());
     }
 
     public BookDto returnBook(String lendingID, String authorization) {
@@ -50,22 +51,23 @@ public class LendingService {
         if (!lentBook.getUser().getUserId().equals(userId)) {
             throw new IncorrectLogInInformationException();
         }
-        if(lentBook.getDueDate().isBefore(LocalDate.now())){
-            throw new IllegalArgumentException("Book is returned too late, pay up now!!!");
-        }
         Book book = lentBook.getBook();
         book.setHidden(false);
         lentBookRepository.removeLending(lendingID);
+        if (lentBook.getDueDate().isBefore(LocalDate.now())) {
+            throw new BookOverdueException();
+        }
+
         return bookMapper.toDto(book);
     }
 
-    public LentBook lendBook(String authorization, String bookIsbn) throws BookNotAvailableException {
+    public LentBookDto lendBook(String authorization, String bookIsbn) throws BookNotAvailableException {
         String userId = securityService.getUserIdByAuthorizationString(authorization);
         User user = getUserFromRepository(userId);
         Book book = getBookFromRepository(bookIsbn);
         Book lendingBook = updateBookVisibility(book);
         LentBook bookToLend = new LentBook(lendingBook, user);
-        return lentBookRepository.lendBook(bookToLend);
+        return lentBookMapper.lentBookToDTO(lentBookRepository.lendBook(bookToLend));
     }
 
     private User getUserFromRepository(String userId) {

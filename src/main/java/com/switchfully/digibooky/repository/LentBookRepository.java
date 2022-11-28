@@ -25,7 +25,7 @@ public class LentBookRepository {
     public void mocking() {
         Book bookToLend = bookRepository.getBookList().get(0);
         bookToLend.setHidden(true);
-        LentBook lentBook = new LentBook(bookToLend, userRepository.getUser("loic@email.com"));
+        LentBook lentBook = new LentBook(bookToLend, userRepository.getUser("member@email.com"));
         lentBookList.put(lentBook.getLendingID(), lentBook);
     }
 

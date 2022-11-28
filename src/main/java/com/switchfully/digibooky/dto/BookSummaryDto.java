@@ -19,14 +19,16 @@ public class BookSummaryDto {
     private Author author;
 
     private String summary;
+    private boolean isHidden;
 
     // private final boolean isHidden; indien nodig.
 
-    public BookSummaryDto(String isbn, String title, Author author, String summary) {
+    public BookSummaryDto(String isbn, String title, Author author, String summary, boolean isHidden) {
         ISBN = isbn;
         this.title = title;
         this.author = author;
         this.summary = summary;
+        this.isHidden = isHidden;
     }
 
 

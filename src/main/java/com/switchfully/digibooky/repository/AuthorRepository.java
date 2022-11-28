@@ -23,4 +23,8 @@ public class AuthorRepository {
     public List<Author> getAuthorList() {
         return authorList;
     }
+
+    public void addAuthor(Author author) {
+        authorList.add(author);
+    }
 }

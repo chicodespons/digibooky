@@ -1,5 +1,6 @@
 package com.switchfully.digibooky.service;
 
+import com.switchfully.digibooky.dto.LentBookDto;
 import com.switchfully.digibooky.exceptions.*;
 import com.switchfully.digibooky.exceptions.IncorrectLogInInformationException;
 import org.junit.jupiter.api.Test;
@@ -64,7 +65,7 @@ class LendingServiceTest {
         String authorization = "Basic " + primitiveAuthorization;
         Book book = bookRepository.getBookList().get(1);
 
-        LentBook lentBook = lendingService.lendBook(authorization, book.getISBN());
+        LentBookDto lentBook = lendingService.lendBook(authorization, book.getISBN());
 
         assertEquals(lentBook.getBook().getISBN(), book.getISBN());
     }

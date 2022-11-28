@@ -43,7 +43,7 @@ class BookMapperTest {
     @DisplayName("Testing from book to BookSummaryDto")
     void toBookSummaryDto_whenGivenBook_getBookSummaryDto() {
         //Given
-        BookSummaryDto bookSummaryDto = new BookSummaryDto("1111", "test", new Author("Jane", "Janeson"), "this is a testbook");
+        BookSummaryDto bookSummaryDto = new BookSummaryDto("1111", "test", new Author("Jane", "Janeson"), "this is a testbook", false);
         Book book = new Book("1111", "test", new Author("Jane", "Janeson"),"this is a testbook", false);
         //When
 
@@ -57,8 +57,8 @@ class BookMapperTest {
         //Given
         List<BookSummaryDto> bookSummaryDtoList = new ArrayList<>();
         List<Book> bookList = new ArrayList<>();
-        bookSummaryDtoList.add(new BookSummaryDto("1111", "test", new Author("Jane", "Janeson"), "this is a testbook"));
-        bookSummaryDtoList.add(new BookSummaryDto("2222", "test2", new Author("Jano", "Janoson"), "this is a testbook2"));
+        bookSummaryDtoList.add(new BookSummaryDto("1111", "test", new Author("Jane", "Janeson"), "this is a testbook", false));
+        bookSummaryDtoList.add(new BookSummaryDto("2222", "test2", new Author("Jano", "Janoson"), "this is a testbook2", true));
         bookList.add(new Book("1111", "test", new Author("Jane", "Janeson"), "this is a testbook", false));
         bookList.add(new Book("2222", "test2", new Author("Jano", "Janoson"), "this is a testbook2", true));
         //When

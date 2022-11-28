@@ -56,4 +56,9 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     protected void bookNotAvailableException(BookNotAvailableException ex, HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
     }
+
+    @ExceptionHandler(BookOverdueException.class)
+    protected void bookOverdueException(BookOverdueException ex, HttpServletResponse response) throws IOException {
+        response.sendError(HttpStatus.OK.value(), ex.getMessage());
+    }
 }

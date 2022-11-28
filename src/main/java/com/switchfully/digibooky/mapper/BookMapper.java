@@ -27,7 +27,8 @@ public class BookMapper {
     }
 
     public BookSummaryDto toBookSummaryDto(Book book) {
-        return new BookSummaryDto(book.getISBN(), book.getTitle(), book.getAuthor(), book.getSummary());
+        return new BookSummaryDto(book.getISBN(), book.getTitle(), book.getAuthor(), book.getSummary(),
+                book.isHidden());
     }
 
     public List<BookSummaryDto> toBookSummaryDto(Collection<Book> bookCollection) {
